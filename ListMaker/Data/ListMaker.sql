@@ -69,7 +69,7 @@ CREATE TABLE [GroceryList] (
   [Notes] nvarchar(255),
   [DateShopping] date,
   [DateCreated] datetime not null,
-  [IsOpen] bit
+  [IsOpen] bit not null
 )
 GO
 
