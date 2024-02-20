@@ -4,6 +4,6 @@ namespace ListMaker.Respositories
 {
     public interface IItemRepository
     {
-        List<Item> GetAllByUserId(int userId);
+        List<Item> GetAll(int? userId);
     }
 }
