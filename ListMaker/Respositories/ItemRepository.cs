@@ -7,7 +7,7 @@ public class ItemRepository : BaseRepository, IItemRepository
 {
     public ItemRepository(IConfiguration configuration) : base(configuration) { }
 
-    public List<Item> GetAllByUserId(int userId)
+    public List<Item> GetAll(int? userId)
     {
         using (var conn = Connection)
         {
@@ -26,6 +26,12 @@ public class ItemRepository : BaseRepository, IItemRepository
                             FROM Item i
                             JOIN StoreSection ss
 	                            ON i.StoreSectionId = ss.Id";
+
+                if (userId.HasValue)
+                {
+                    sql += $" WHERE i.UserId = {userId}";
+                }
+
                 cmd.CommandText = sql;
                 var reader = cmd.ExecuteReader();
 

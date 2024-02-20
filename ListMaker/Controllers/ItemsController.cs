@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ListMaker.Controllers;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class ItemsController : ControllerBase
 {
@@ -16,8 +16,8 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetByUserId(int userId)
+    public IActionResult GetAll(int? userId)
     {
-        return Ok(_itemRepo.GetAllByUserId(userId));
+        return Ok(_itemRepo.GetAll(userId));
     }
 }

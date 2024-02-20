@@ -40,7 +40,8 @@ CREATE TABLE [RecipeItem] (
   [Id] int PRIMARY KEY identity,
   [RecipeId] int not null,
   [ItemId] int not null,
-  [Quantity] float not null
+  [Quantity] float not null,
+  [UnitMeas] nvarchar(30)
 )
 GO
 
@@ -58,7 +59,8 @@ CREATE TABLE [GroceryListItem] (
   [Id] int PRIMARY KEY identity,
   [GroceryListId] int not null,
   [ItemId] int not null,
-  [Quantity] float not null
+  [Quantity] float not null,
+  [UnitMeas] nvarchar(30)
 )
 GO
 

@@ -8,5 +8,5 @@ public class Recipe
     public string? Notes { get; set; }
     public DateTime DateCreated { get; set; }
 
-    public List<RecipeItem> Items { get; set; } = new List<RecipeItem>();
+    public List<RecipeItem> RecipeItems { get; set; } = new List<RecipeItem>();
 }

@@ -7,6 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
+builder.Services.AddTransient<IRecipeRepository, RecipeRepository>();
 
 var app = builder.Build();
 
