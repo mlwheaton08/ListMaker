@@ -20,6 +20,17 @@ public static class DbUtils
         return reader.GetInt32(reader.GetOrdinal(column));
     }
 
+    public static int? GetNullableInt(SqlDataReader reader, string column)
+    {
+        var ordinal = reader.GetOrdinal(column);
+        if (reader.IsDBNull(ordinal))
+        {
+            return null;
+        }
+
+        return reader.GetInt32(ordinal);
+    }
+
     public static double GetDouble(SqlDataReader reader, string column)
     {
         return reader.GetDouble(reader.GetOrdinal(column));
@@ -55,17 +66,6 @@ public static class DbUtils
     public static DateTime GetDateTime(SqlDataReader reader, string column)
     {
         return reader.GetDateTime(reader.GetOrdinal(column));
-    }
-
-    public static int? GetNullableInt(SqlDataReader reader, string column)
-    {
-        var ordinal = reader.GetOrdinal(column);
-        if (reader.IsDBNull(ordinal))
-        {
-            return null;
-        }
-
-        return reader.GetInt32(ordinal);
     }
 
     public static DateTime? GetNullableDateTime(SqlDataReader reader, string column)
