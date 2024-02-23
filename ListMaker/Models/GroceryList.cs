@@ -10,5 +10,5 @@ public class GroceryList
     public DateTime DateUpdated { get; set; }
     public bool IsOpen { get; set; }
 
-    public List<GroceryListItem>? Items { get; set; } = new List<GroceryListItem>();
+    public List<GroceryListItem> ListItems { get; set; } = new List<GroceryListItem>();
 }

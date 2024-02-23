@@ -7,7 +7,7 @@ public class GroceryListRepository : BaseRepository, IGroceryListRepository
 {
     public GroceryListRepository(IConfiguration configuration) : base(configuration) { }
 
-    public List<GroceryList> GetAll(int userId, bool? open)
+    public List<GroceryList> GetAll(int? userId, bool? listItems, bool? open)
     {
         using (var conn = Connection)
         {
@@ -15,27 +15,71 @@ public class GroceryListRepository : BaseRepository, IGroceryListRepository
             using (var cmd = conn.CreateCommand())
             {
                 var sql = @"SELECT
-	                            Id,
-	                            UserId,
-	                            [Name],
-	                            Notes,
-	                            DateCreated,
-                                DateUpdated,
-	                            IsOpen
-                            FROM GroceryList
-                            WHERE UserId = @UserId";
+	                            gl.Id,
+	                            gl.UserId,
+	                            gl.[Name],
+	                            gl.Notes,
+	                            gl.DateCreated,
+                                gl.DateUpdated,
+	                            gl.IsOpen";
 
-                if (open == true)
+                if (listItems == true)
                 {
-                    sql += $" AND IsOpen = '1'";
+                    sql += @",
+                            gli.Id as GroceryListItemId,
+                            gli.Quantity as GroceryListItemQuantity,
+	                        gli.UnitMeas as GroceryListItemUnitMeas,
+                            i.Id as ItemId,
+	                        i.UserId as ItemUserId,
+	                        i.StoreSectionId as ItemStoreSectionId,
+	                        i.[Name] as ItemName,
+	                        i.Notes as ItemNotes,
+	                        i.DateCreated as ItemDateCreated,
+	                        ss.[Name] as ItemStoreSectionName,
+	                        ss.OrderPosition as ItemStoreSectionOrderPosition";
                 }
 
-                if (open == false)
+                sql += @"
+                        FROM GroceryList gl";
+
+                if (listItems == true)
                 {
-                    sql += $" AND IsOpen = '0'";
+                    sql += @"
+                            JOIN GroceryListItem gli
+	                            ON gl.Id = gli.GroceryListId
+                            JOIN Item i
+	                            ON gli.ItemId = i.Id
+                            JOIN StoreSection ss
+	                            ON i.StoreSectionId = ss.Id";
                 }
 
-                DbUtils.AddParameter(cmd, "@UserId", userId);
+                // there is probably a cleaner way to do this
+                if (userId.HasValue || open.HasValue)
+                {
+                    sql += " WHERE ";
+
+                    if (userId.HasValue)
+                    {
+                        sql += $"gl.UserId = {userId}";
+                    }
+
+                    if (userId.HasValue && open.HasValue)
+                    {
+                        sql += " AND ";
+                    }
+
+                    if (open == false)
+                    {
+                        sql += "IsOpen = '0'";
+                    }
+
+                    if (open == true)
+                    {
+                        sql += "IsOpen = '1'";
+                    }
+
+
+                }
 
                 cmd.CommandText = sql;
                 var reader = cmd.ExecuteReader();
@@ -43,18 +87,55 @@ public class GroceryListRepository : BaseRepository, IGroceryListRepository
                 var lists = new List<GroceryList>();
                 while (reader.Read())
                 {
-                    var list = new GroceryList()
-                    {
-                        Id = DbUtils.GetInt(reader, "Id"),
-                        UserId = DbUtils.GetInt(reader, "UserId"),
-                        Name = DbUtils.GetString(reader, "Name"),
-                        Notes = DbUtils.GetString(reader, "Notes"),
-                        DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
-                        DateUpdated = DbUtils.GetDateTime(reader, "DateUpdated"),
-                        IsOpen = DbUtils.GetBoolean(reader, "IsOpen")
-                    };
+                    var listId = DbUtils.GetInt(reader, "Id");
+                    var existingList = lists.FirstOrDefault(l => l.Id == listId);
 
-                    lists.Add(list);
+                    if (existingList == null)
+                    {
+                        existingList = new GroceryList()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Notes = DbUtils.GetString(reader, "Notes"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                            DateUpdated = DbUtils.GetDateTime(reader, "DateUpdated"),
+                            IsOpen = DbUtils.GetBoolean(reader, "IsOpen"),
+                            ListItems = new List<GroceryListItem>()
+                        };
+
+                        lists.Add(existingList);
+                    }
+
+                    if (listItems == true)
+                    {
+                        if (DbUtils.IsNotDbNull(reader, "GroceryListItemId"))
+                        {
+                            existingList.ListItems.Add(new GroceryListItem()
+                            {
+                                Id = DbUtils.GetInt(reader, "GroceryListItemId"),
+                                GroceryListId = DbUtils.GetInt(reader, "Id"),
+                                ItemId = DbUtils.GetInt(reader, "ItemId"),
+                                Quantity = DbUtils.GetDouble(reader, "GroceryListItemQuantity"),
+                                UnitMeas = DbUtils.GetString(reader, "GroceryListItemUnitMeas"),
+                                Item = new Item()
+                                {
+                                    Id = DbUtils.GetInt(reader, "ItemId"),
+                                    UserId = DbUtils.GetInt(reader, "ItemUserId"),
+                                    StoreSectionId = DbUtils.GetInt(reader, "ItemStoreSectionId"),
+                                    Name = DbUtils.GetString(reader, "ItemName"),
+                                    Notes = DbUtils.GetString(reader, "ItemNotes"),
+                                    DateCreated = DbUtils.GetDateTime(reader, "ItemDateCreated"),
+                                    StoreSection = new StoreSection()
+                                    {
+                                        Id = DbUtils.GetInt(reader, "ItemStoreSectionId"),
+                                        Name = DbUtils.GetString(reader, "ItemStoreSectionName"),
+                                        OrderPosition = DbUtils.GetInt(reader, "ItemStoreSectionOrderPosition")
+                                    }
+                                }
+                            });
+                        }
+                    }
                 }
 
                 reader.Close();

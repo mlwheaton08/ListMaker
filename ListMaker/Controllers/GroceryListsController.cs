@@ -16,9 +16,9 @@ namespace ListMaker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int userId, bool? isOpen)
+        public IActionResult Get(int? userId, bool? listItems, bool? isOpen)
         {
-            return Ok(_groceryListRepo.GetAll(userId, isOpen));
+            return Ok(_groceryListRepo.GetAll(userId, listItems, isOpen));
         }
     }
 }
