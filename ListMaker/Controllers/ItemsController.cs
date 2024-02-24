@@ -22,7 +22,7 @@ public class ItemsController : ControllerBase
         return Ok(_itemRepo.GetAll(userId));
     }
 
-    [HttpGet("{id}", Name ="GetById")]
+    [HttpGet("{id}", Name = "GeItemById")]
     public IActionResult GetById(int id)
     {
         var item = _itemRepo.GetById(id);
@@ -34,6 +34,6 @@ public class ItemsController : ControllerBase
     public IActionResult Post(Item item)
     {
         _itemRepo.Add(item);
-        return CreatedAtAction("GetById", new { id = item.Id }, item);
+        return CreatedAtAction("GetItemById", new { id = item.Id }, item);
     }
 }

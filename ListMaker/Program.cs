@@ -9,6 +9,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
 builder.Services.AddTransient<IRecipeRepository, RecipeRepository>();
 builder.Services.AddTransient<IGroceryListRepository, GroceryListRepository>();
+builder.Services.AddTransient<IStoreSectionRepository, StoreSectionRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

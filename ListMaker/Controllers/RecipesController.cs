@@ -20,5 +20,13 @@ namespace ListMaker.Controllers
         {
             return Ok(_recipeRepo.GetAll(userId, listItems));
         }
+
+        [HttpGet("{id}", Name = "GetRecipeById")]
+        public IActionResult GetById(int id)
+        {
+            var recipe = _recipeRepo.GetById(id);
+            if (recipe != null) return Ok(recipe);
+            return BadRequest();
+        }
     }
 }
