@@ -26,7 +26,7 @@ namespace ListMaker.Controllers
         {
             var recipe = _recipeRepo.GetById(id);
             if (recipe != null) return Ok(recipe);
-            return BadRequest();
+            return NotFound();
         }
     }
 }

@@ -11,6 +11,7 @@ builder.Services.AddTransient<IRecipeRepository, RecipeRepository>();
 builder.Services.AddTransient<IGroceryListRepository, GroceryListRepository>();
 builder.Services.AddTransient<IStoreSectionRepository, StoreSectionRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IRecipeItemRepository, RecipeItemRepository>();
 
 var app = builder.Build();
 

@@ -22,18 +22,18 @@ public class ItemsController : ControllerBase
         return Ok(_itemRepo.GetAll(userId));
     }
 
-    [HttpGet("{id}", Name = "GeItemById")]
+    [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
         var item = _itemRepo.GetById(id);
         if (item != null) return Ok(item);
-        return BadRequest();
+        return NotFound();
     }
 
     [HttpPost]
     public IActionResult Post(Item item)
     {
         _itemRepo.Add(item);
-        return CreatedAtAction("GetItemById", new { id = item.Id }, item);
+        return CreatedAtAction("GetById", new { id = item.Id }, item);
     }
 }

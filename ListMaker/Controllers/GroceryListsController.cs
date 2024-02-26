@@ -26,6 +26,6 @@ public class GroceryListsController : ControllerBase
     {
         var list = _groceryListRepo.GetById(id);
         if (list != null) return Ok(list);
-        return BadRequest();
+        return NotFound();
     }
 }

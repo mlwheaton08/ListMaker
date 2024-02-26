@@ -20,6 +20,6 @@ public class UsersController : ControllerBase
     {
         var user = _userRepo.GetByFirebaseId(firebaseId);
         if (user != null) return Ok(user);
-        return BadRequest();
+        return NotFound();
     }
 }
