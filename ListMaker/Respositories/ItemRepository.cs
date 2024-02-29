@@ -1,5 +1,7 @@
 ﻿using ListMaker.Models;
 using ListMaker.Utils;
+using Microsoft.VisualBasic;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 
 namespace ListMaker.Respositories;
@@ -145,4 +147,38 @@ public class ItemRepository : BaseRepository, IItemRepository
             }
         }
     }
+
+//    INSERT INTO GroceryListItem
+//    (GroceryListId,
+//    ItemId,
+//    Quantity,
+//    UnitMeas)
+//OUTPUT INSERTED.ID
+//VALUES
+//    (1,
+//    1,
+//    10,
+//    'lbs')
+
+
+//UPDATE GroceryListItem
+//    SET
+//        GroceryListId = 2,
+//        ItemId = 2,
+//        Quantity = 5,
+//        UnitMeas = 'piles'
+//WHERE Id = 27
+
+
+//DELETE FROM GroceryListItem WHERE Id = 27
+
+
+//SELECT
+//    Id,
+//    GroceryListId,
+//    ItemId,
+//    Quantity,
+//    UnitMeas
+//FROM GroceryListItem
+//WHERE Id = 27
 }

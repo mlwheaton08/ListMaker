@@ -3,11 +3,11 @@ using ListMaker.Utils;
 
 namespace ListMaker.Respositories;
 
-public class RecipeItemRepository : BaseRepository, IRecipeItemRepository
+public class GroceryListItemRepository : BaseRepository, IGroceryListItemRepository
 {
-    public RecipeItemRepository(IConfiguration configuration) : base(configuration) { }
+    public GroceryListItemRepository(IConfiguration configuration) : base(configuration) { }
 
-    public RecipeItem GetById(int id)
+    public GroceryListItem GetById(int id)
     {
         using (var conn = Connection)
         {
@@ -16,23 +16,23 @@ public class RecipeItemRepository : BaseRepository, IRecipeItemRepository
             {
                 cmd.CommandText = @"SELECT
 	                                    Id,
-	                                    RecipeId,
+	                                    GroceryListId,
 	                                    ItemId,
 	                                    Quantity,
 	                                    UnitMeas
-                                    FROM RecipeItem
+                                    FROM GroceryListItem
                                     WHERE Id = @Id";
                 DbUtils.AddParameter(cmd, "@Id", id);
 
                 var reader = cmd.ExecuteReader();
-                RecipeItem recipeItem = null;
+                GroceryListItem groceryListItem = null;
 
                 if (reader.Read())
                 {
-                    recipeItem = new RecipeItem()
+                    groceryListItem = new GroceryListItem()
                     {
                         Id = id,
-                        RecipeId = DbUtils.GetInt(reader, "RecipeId"),
+                        GroceryListId = DbUtils.GetInt(reader, "GroceryListId"),
                         ItemId = DbUtils.GetInt(reader, "ItemId"),
                         Quantity = DbUtils.GetDouble(reader, "Quantity"),
                         UnitMeas = DbUtils.GetString(reader, "UnitMeas")
@@ -40,60 +40,60 @@ public class RecipeItemRepository : BaseRepository, IRecipeItemRepository
                 }
 
                 reader.Close();
-                return recipeItem;
+                return groceryListItem;
             }
         }
     }
 
-    public void Add(RecipeItem recipeItem)
+    public void Add(GroceryListItem groceryListItem)
     {
         using (var conn = Connection)
         {
             conn.Open();
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"INSERT INTO RecipeItem
-	                                    (RecipeId,
+                cmd.CommandText = @"INSERT INTO GroceryListItem
+	                                    (GroceryListId,
 	                                    ItemId,
 	                                    Quantity,
 	                                    UnitMeas)
                                     OUTPUT INSERTED.ID
                                     VALUES
-	                                    (@RecipeId,
+	                                    (@GroceryListId,
 	                                    @ItemId,
 	                                    @Quantity,
 	                                    @UnitMeas)";
 
-                DbUtils.AddParameter(cmd, "@RecipeId", recipeItem.RecipeId);
-                DbUtils.AddParameter(cmd, "@ItemId", recipeItem.ItemId);
-                DbUtils.AddParameter(cmd, "@Quantity", recipeItem.Quantity);
-                DbUtils.AddParameter(cmd, "@UnitMeas", recipeItem.UnitMeas);
+                DbUtils.AddParameter(cmd, "@GroceryListId", groceryListItem.GroceryListId);
+                DbUtils.AddParameter(cmd, "@ItemId", groceryListItem.ItemId);
+                DbUtils.AddParameter(cmd, "@Quantity", groceryListItem.Quantity);
+                DbUtils.AddParameter(cmd, "@UnitMeas", groceryListItem.UnitMeas);
 
-                recipeItem.Id = (int)cmd.ExecuteScalar();
+                groceryListItem.Id = (int)cmd.ExecuteScalar();
             }
         }
     }
 
-    public void Update(RecipeItem recipeItem)
+    public void Update(GroceryListItem groceryListItem)
     {
         using (var conn = Connection)
         {
             conn.Open();
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"UPDATE RecipeItem
+                cmd.CommandText = @"UPDATE GroceryListItem
 	                                    SET
-		                                    RecipeId = @RecipeId,
+		                                    GroceryListId = @GroceryListId,
 		                                    ItemId = @ItemId,
 		                                    Quantity = @Quantity,
 		                                    UnitMeas = @UnitMeas
                                     WHERE Id = @Id";
 
-                DbUtils.AddParameter(cmd, "@Id", recipeItem.Id);
-                DbUtils.AddParameter(cmd, "@RecipeId", recipeItem.RecipeId);
-                DbUtils.AddParameter(cmd, "@ItemId", recipeItem.ItemId);
-                DbUtils.AddParameter(cmd, "@Quantity", recipeItem.Quantity);
-                DbUtils.AddParameter(cmd, "@UnitMeas", recipeItem.UnitMeas);
+                DbUtils.AddParameter(cmd, "@Id", groceryListItem.Id);
+                DbUtils.AddParameter(cmd, "@GroceryListId", groceryListItem.GroceryListId);
+                DbUtils.AddParameter(cmd, "@ItemId", groceryListItem.ItemId);
+                DbUtils.AddParameter(cmd, "@Quantity", groceryListItem.Quantity);
+                DbUtils.AddParameter(cmd, "@UnitMeas", groceryListItem.UnitMeas);
 
                 cmd.ExecuteNonQuery();
             }
@@ -107,7 +107,7 @@ public class RecipeItemRepository : BaseRepository, IRecipeItemRepository
             conn.Open();
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = "DELETE FROM RecipeItem WHERE Id = @Id";
+                cmd.CommandText = "DELETE FROM GroceryListItem WHERE Id = @Id";
                 DbUtils.AddParameter(cmd, "@Id", id);
                 cmd.ExecuteNonQuery();
             }
