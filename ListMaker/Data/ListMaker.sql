@@ -69,8 +69,8 @@ CREATE TABLE [GroceryList] (
   [UserId] int not null,
   [Name] nvarchar(255) not null,
   [Notes] nvarchar(255),
-  [DateShopping] date,
   [DateCreated] datetime not null,
+  [DateUpdated] datetime not null,
   [IsOpen] bit not null
 )
 GO
@@ -198,10 +198,10 @@ VALUES
   (4,25,1)
 GO
 
-INSERT INTO [GroceryList] (UserId,[Name],Notes,DateShopping,DateCreated,IsOpen)
+INSERT INTO [GroceryList] (UserId,[Name],Notes,DateCreated,DateUpdated,IsOpen)
 VALUES
-  (1,'2023/12/01',null,'2023-12-01','2023-12-01T09:19:44.000Z','0'),
-  (1,'2023/12/02',null,'2023-12-02','2023-12-02T09:19:44.000Z','0'),
+  (1,'2023/12/01',null,'2023-11-01T09:19:44.000Z','2023-12-01T09:19:44.000Z','0'),
+  (1,'2023/12/02',null,'2023-12-01T09:19:44.000Z','2023-12-02T09:19:44.000Z','0'),
   (1,'Today',null,'2023-12-03','2023-12-03T09:19:44.000Z','1')
 GO
 

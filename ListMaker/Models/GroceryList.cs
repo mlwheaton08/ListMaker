@@ -6,9 +6,9 @@ public class GroceryList
     public int UserId { get; set; }
     public string Name { get; set; }
     public string? Notes { get; set; }
-    public DateOnly? DateShopping { get; set; }
-    public DateTime Created { get; set; }
+    public DateTime DateCreated { get; set; }
+    public DateTime DateUpdated { get; set; }
     public bool IsOpen { get; set; }
 
-    public List<GroceryListItem> Items { get; set; } = new List<GroceryListItem>();
+    public List<GroceryListItem> ListItems { get; set; } = new List<GroceryListItem>();
 }

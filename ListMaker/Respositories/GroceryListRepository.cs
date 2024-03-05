@@ -3,11 +3,11 @@ using ListMaker.Utils;
 
 namespace ListMaker.Respositories;
 
-public class RecipeRepository : BaseRepository, IRecipeRepository
+public class GroceryListRepository : BaseRepository, IGroceryListRepository
 {
-    public RecipeRepository(IConfiguration configuration) : base(configuration) { }
+    public GroceryListRepository(IConfiguration configuration) : base(configuration) { }
 
-    public List<Recipe> GetAll(int? userId, bool listItems = false)
+    public List<GroceryList> GetAll(int? userId, bool? listItems, bool? open)
     {
         using (var conn = Connection)
         {
@@ -15,82 +15,109 @@ public class RecipeRepository : BaseRepository, IRecipeRepository
             using (var cmd = conn.CreateCommand())
             {
                 var sql = @"SELECT
-	                            r.Id,
-	                            r.UserId,
-	                            r.[Name],
-	                            r.Notes,
-	                            r.DateCreated";
+	                            gl.Id,
+	                            gl.UserId,
+	                            gl.[Name],
+	                            gl.Notes,
+	                            gl.DateCreated,
+                                gl.DateUpdated,
+	                            gl.IsOpen";
 
-                if (listItems)
+                if (listItems == true)
                 {
                     sql += @",
-                            ri.Id as RecipeItemId,
-	                        ri.Quantity as RecipeItemQuantity,
-                            ri.UnitMeas as RecipeItemUnitMeas,
+                            gli.Id as GroceryListItemId,
+                            gli.Quantity as GroceryListItemQuantity,
+	                        gli.UnitMeas as GroceryListItemUnitMeas,
                             i.Id as ItemId,
 	                        i.UserId as ItemUserId,
 	                        i.StoreSectionId as ItemStoreSectionId,
 	                        i.[Name] as ItemName,
 	                        i.Notes as ItemNotes,
 	                        i.DateCreated as ItemDateCreated,
-                            ss.[Name] as ItemStoreSectionName,
+	                        ss.[Name] as ItemStoreSectionName,
 	                        ss.OrderPosition as ItemStoreSectionOrderPosition";
                 }
 
                 sql += @"
-                        FROM Recipe r";
+                        FROM GroceryList gl";
 
-                if (listItems)
+                if (listItems == true)
                 {
                     sql += @"
-                            JOIN RecipeItem ri
-	                            ON r.Id = ri.RecipeId
+                            JOIN GroceryListItem gli
+	                            ON gl.Id = gli.GroceryListId
                             JOIN Item i
-	                            ON i.Id = ri.ItemId
+	                            ON gli.ItemId = i.Id
                             JOIN StoreSection ss
 	                            ON i.StoreSectionId = ss.Id";
                 }
 
-                if (userId.HasValue)
+                // there is possibly a cleaner way to do this
+                if (userId.HasValue || open.HasValue)
                 {
-                    sql += $" WHERE r.UserId = {userId}";
+                    sql += " WHERE ";
+
+                    if (userId.HasValue)
+                    {
+                        sql += $"gl.UserId = {userId}";
+                    }
+
+                    if (userId.HasValue && open.HasValue)
+                    {
+                        sql += " AND ";
+                    }
+
+                    if (open == false)
+                    {
+                        sql += "IsOpen = '0'";
+                    }
+
+                    if (open == true)
+                    {
+                        sql += "IsOpen = '1'";
+                    }
+
+
                 }
 
                 cmd.CommandText = sql;
                 var reader = cmd.ExecuteReader();
 
-                var recipes = new List<Recipe>();
+                var lists = new List<GroceryList>();
                 while (reader.Read())
                 {
-                    var recipeId = DbUtils.GetInt(reader, "Id");
-                    var existingRecipe = recipes.FirstOrDefault(r => r.Id == recipeId);
+                    var listId = DbUtils.GetInt(reader, "Id");
+                    var existingList = lists.FirstOrDefault(l => l.Id == listId);
 
-                    if (existingRecipe == null)
+                    if (existingList == null)
                     {
-                        existingRecipe = new Recipe()
+                        existingList = new GroceryList()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Notes = DbUtils.GetString(reader, "Notes"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
-                            RecipeItems = new List<RecipeItem>()
+                            DateUpdated = DbUtils.GetDateTime(reader, "DateUpdated"),
+                            IsOpen = DbUtils.GetBoolean(reader, "IsOpen"),
+                            ListItems = new List<GroceryListItem>()
                         };
 
-                        recipes.Add(existingRecipe);
+                        lists.Add(existingList);
                     }
 
-                    if (listItems)
+                    if (listItems == true)
                     {
-                        if (DbUtils.IsNotDbNull(reader, "RecipeItemId"))
+                        if (DbUtils.IsNotDbNull(reader, "GroceryListItemId"))
                         {
-                            existingRecipe.RecipeItems.Add(new RecipeItem()
+                            existingList.ListItems.Add(new GroceryListItem()
                             {
-                                Id = DbUtils.GetInt(reader, "RecipeItemId"),
-                                RecipeId = DbUtils.GetInt(reader, "Id"),
+                                Id = DbUtils.GetInt(reader, "GroceryListItemId"),
+                                GroceryListId = DbUtils.GetInt(reader, "Id"),
                                 ItemId = DbUtils.GetInt(reader, "ItemId"),
-                                Quantity = DbUtils.GetDouble(reader, "RecipeItemQuantity"),
-                                UnitMeas = DbUtils.GetString(reader, "RecipeItemUnitMeas"),
+                                Quantity = DbUtils.GetDouble(reader, "GroceryListItemQuantity"),
+                                UnitMeas = DbUtils.GetString(reader, "GroceryListItemUnitMeas"),
                                 Item = new Item()
                                 {
                                     Id = DbUtils.GetInt(reader, "ItemId"),
@@ -112,12 +139,12 @@ public class RecipeRepository : BaseRepository, IRecipeRepository
                 }
 
                 reader.Close();
-                return recipes;
+                return lists;
             }
         }
     }
 
-    public Recipe GetById(int id)
+    public GroceryList GetById(int id)
     {
         using (var conn = Connection)
         {
@@ -125,60 +152,64 @@ public class RecipeRepository : BaseRepository, IRecipeRepository
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = @"SELECT
-	                                    r.Id,
-	                                    r.UserId,
-	                                    r.[Name],
-	                                    r.Notes,
-	                                    r.DateCreated,
-                                        ri.Id as RecipeItemId,
-	                                    ri.Quantity as RecipeItemQuantity,
-                                        ri.UnitMeas as RecipeItemUnitMeas,
+	                                    gl.Id,
+	                                    gl.UserId,
+	                                    gl.[Name],
+	                                    gl.Notes,
+	                                    gl.DateCreated,
+                                        gl.DateUpdated,
+	                                    gl.IsOpen,
+                                        gli.Id as GroceryListItemId,
+                                        gli.Quantity as GroceryListItemQuantity,
+	                                    gli.UnitMeas as GroceryListItemUnitMeas,
                                         i.Id as ItemId,
 	                                    i.UserId as ItemUserId,
 	                                    i.StoreSectionId as ItemStoreSectionId,
 	                                    i.[Name] as ItemName,
 	                                    i.Notes as ItemNotes,
 	                                    i.DateCreated as ItemDateCreated,
-                                        ss.[Name] as ItemStoreSectionName,
+	                                    ss.[Name] as ItemStoreSectionName,
 	                                    ss.OrderPosition as ItemStoreSectionOrderPosition
-                                    FROM Recipe r
-                                    LEFT JOIN RecipeItem ri
-	                                    ON r.Id = ri.RecipeId
+                                    FROM GroceryList gl
+                                    LEFT JOIN GroceryListItem gli
+	                                    ON gl.Id = gli.GroceryListId
                                     LEFT JOIN Item i
-	                                    ON i.Id = ri.ItemId
+	                                    ON gli.ItemId = i.Id
                                     LEFT JOIN StoreSection ss
 	                                    ON i.StoreSectionId = ss.Id
-                                    WHERE r.Id = @Id";
+                                    WHERE gl.Id = @Id";
 
                 DbUtils.AddParameter(cmd, "@Id", id);
 
                 var reader = cmd.ExecuteReader();
 
-                Recipe recipe = null;
+                GroceryList list = null;
                 while (reader.Read())
                 {
-                    if (recipe == null)
+                    if (list == null)
                     {
-                        recipe = new Recipe()
+                        list = new GroceryList()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             UserId = DbUtils.GetInt(reader, "UserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Notes = DbUtils.GetString(reader, "Notes"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
-                            RecipeItems = new List<RecipeItem>()
+                            DateUpdated = DbUtils.GetDateTime(reader, "DateUpdated"),
+                            IsOpen = DbUtils.GetBoolean(reader, "IsOpen"),
+                            ListItems = new List<GroceryListItem>()
                         };
                     }
 
-                    if (DbUtils.IsNotDbNull(reader, "RecipeItemId"))
+                    if (DbUtils.IsNotDbNull(reader, "GroceryListItemId"))
                     {
-                        recipe.RecipeItems.Add(new RecipeItem()
+                        list.ListItems.Add(new GroceryListItem()
                         {
-                            Id = DbUtils.GetInt(reader, "RecipeItemId"),
-                            RecipeId = DbUtils.GetInt(reader, "Id"),
+                            Id = DbUtils.GetInt(reader, "GroceryListItemId"),
+                            GroceryListId = DbUtils.GetInt(reader, "Id"),
                             ItemId = DbUtils.GetInt(reader, "ItemId"),
-                            Quantity = DbUtils.GetDouble(reader, "RecipeItemQuantity"),
-                            UnitMeas = DbUtils.GetString(reader, "RecipeItemUnitMeas"),
+                            Quantity = DbUtils.GetDouble(reader, "GroceryListItemQuantity"),
+                            UnitMeas = DbUtils.GetString(reader, "GroceryListItemUnitMeas"),
                             Item = new Item()
                             {
                                 Id = DbUtils.GetInt(reader, "ItemId"),
@@ -199,60 +230,70 @@ public class RecipeRepository : BaseRepository, IRecipeRepository
                 }
 
                 reader.Close();
-                return recipe;
+                return list;
             }
         }
     }
 
-    public void Add(Recipe recipe)
+    public void Add(GroceryList groceryList)
     {
         using (var conn = Connection)
         {
             conn.Open();
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"INSERT INTO Recipe
+                cmd.CommandText = @"INSERT INTO GroceryList
                                         (UserId,
                                         [Name],
                                         Notes,
-	                                    DateCreated)
+	                                    DateCreated,
+	                                    DateUpdated,
+	                                    IsOpen)
                                     OUTPUT INSERTED.ID
                                     VALUES
                                         (@UserId,
                                         @Name,
                                         @Notes,
-	                                    @DateCreated)";
+	                                    @DateCreated,
+	                                    @DateUpdated,
+	                                    @IsOpen)";
 
-                DbUtils.AddParameter(cmd, "@UserId", recipe.UserId);
-                DbUtils.AddParameter(cmd, "@Name", recipe.Name);
-                DbUtils.AddParameter(cmd, "@Notes", recipe.Notes);
-                DbUtils.AddParameter(cmd, "@DateCreated", recipe.DateCreated);
+                DbUtils.AddParameter(cmd, "@UserId", groceryList.UserId);
+                DbUtils.AddParameter(cmd, "@Name", groceryList.Name);
+                DbUtils.AddParameter(cmd, "@Notes", groceryList.Notes);
+                DbUtils.AddParameter(cmd, "@DateCreated", groceryList.DateCreated);
+                DbUtils.AddParameter(cmd, "@DateUpdated", groceryList.DateUpdated);
+                DbUtils.AddParameter(cmd, "@IsOpen", groceryList.IsOpen);
 
-                recipe.Id = (int)cmd.ExecuteScalar();
+                groceryList.Id = (int)cmd.ExecuteScalar();
             }
         }
     }
 
-    public void Update(Recipe recipe)
+    public void Update(GroceryList groceryList)
     {
         using (var conn = Connection)
         {
             conn.Open();
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = @"UPDATE Recipe
+                cmd.CommandText = @"UPDATE GroceryList
                                         SET
                                             UserId = @UserId,
                                             [Name] = @Name,
                                             Notes = @Notes,
-		                                    DateCreated = @DateCreated
+		                                    DateCreated = @DateCreated,
+		                                    DateUpdated = @DateUpdated,
+		                                    IsOpen = @IsOpen
                                     WHERE Id = @Id";
 
-                DbUtils.AddParameter(cmd, "@Id", recipe.Id);
-                DbUtils.AddParameter(cmd, "@UserId", recipe.UserId);
-                DbUtils.AddParameter(cmd, "@Name", recipe.Name);
-                DbUtils.AddParameter(cmd, "@Notes", recipe.Notes);
-                DbUtils.AddParameter(cmd, "@DateCreated", recipe.DateCreated);
+                DbUtils.AddParameter(cmd, "@Id", groceryList.Id);
+                DbUtils.AddParameter(cmd, "@UserId", groceryList.UserId);
+                DbUtils.AddParameter(cmd, "@Name", groceryList.Name);
+                DbUtils.AddParameter(cmd, "@Notes", groceryList.Notes);
+                DbUtils.AddParameter(cmd, "@DateCreated", groceryList.DateCreated);
+                DbUtils.AddParameter(cmd, "@DateUpdated", groceryList.DateUpdated);
+                DbUtils.AddParameter(cmd, "@IsOpen", groceryList.IsOpen);
 
                 cmd.ExecuteNonQuery();
             }
@@ -266,7 +307,7 @@ public class RecipeRepository : BaseRepository, IRecipeRepository
             conn.Open();
             using (var cmd = conn.CreateCommand())
             {
-                cmd.CommandText = "DELETE FROM Recipe WHERE Id = @Id";
+                cmd.CommandText = "DELETE FROM GroceryList WHERE Id = @Id";
                 DbUtils.AddParameter(cmd, "@Id", id);
                 cmd.ExecuteNonQuery();
             }
