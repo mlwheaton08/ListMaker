@@ -1,4 +1,5 @@
-﻿using ListMaker.Respositories;
+﻿using ListMaker.Models;
+using ListMaker.Respositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,11 +22,37 @@ public class GroceryListsController : ControllerBase
         return Ok(_groceryListRepo.GetAll(userId, listItems, isOpen));
     }
 
-    [HttpGet("{id}", Name = "GetGroceryListById")]
+    [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
         var list = _groceryListRepo.GetById(id);
         if (list != null) return Ok(list);
         return NotFound();
+    }
+
+    [HttpPost]
+    public IActionResult Post(GroceryList groceryList)
+    {
+        _groceryListRepo.Add(groceryList);
+        return CreatedAtAction("GetById", new { id = groceryList.Id }, groceryList);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, GroceryList groceryList)
+    {
+        if (id != groceryList.Id)
+        {
+            return BadRequest();
+        }
+
+        _groceryListRepo.Update(groceryList);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        _groceryListRepo.Delete(id);
+        return NoContent();
     }
 }

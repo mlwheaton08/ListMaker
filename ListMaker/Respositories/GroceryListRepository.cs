@@ -53,7 +53,7 @@ public class GroceryListRepository : BaseRepository, IGroceryListRepository
 	                            ON i.StoreSectionId = ss.Id";
                 }
 
-                // there is probably a cleaner way to do this
+                // there is possibly a cleaner way to do this
                 if (userId.HasValue || open.HasValue)
                 {
                     sql += " WHERE ";
@@ -171,11 +171,11 @@ public class GroceryListRepository : BaseRepository, IGroceryListRepository
 	                                    ss.[Name] as ItemStoreSectionName,
 	                                    ss.OrderPosition as ItemStoreSectionOrderPosition
                                     FROM GroceryList gl
-                                    JOIN GroceryListItem gli
+                                    LEFT JOIN GroceryListItem gli
 	                                    ON gl.Id = gli.GroceryListId
-                                    JOIN Item i
+                                    LEFT JOIN Item i
 	                                    ON gli.ItemId = i.Id
-                                    JOIN StoreSection ss
+                                    LEFT JOIN StoreSection ss
 	                                    ON i.StoreSectionId = ss.Id
                                     WHERE gl.Id = @Id";
 
@@ -231,6 +231,85 @@ public class GroceryListRepository : BaseRepository, IGroceryListRepository
 
                 reader.Close();
                 return list;
+            }
+        }
+    }
+
+    public void Add(GroceryList groceryList)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO GroceryList
+                                        (UserId,
+                                        [Name],
+                                        Notes,
+	                                    DateCreated,
+	                                    DateUpdated,
+	                                    IsOpen)
+                                    OUTPUT INSERTED.ID
+                                    VALUES
+                                        (@UserId,
+                                        @Name,
+                                        @Notes,
+	                                    @DateCreated,
+	                                    @DateUpdated,
+	                                    @IsOpen)";
+
+                DbUtils.AddParameter(cmd, "@UserId", groceryList.UserId);
+                DbUtils.AddParameter(cmd, "@Name", groceryList.Name);
+                DbUtils.AddParameter(cmd, "@Notes", groceryList.Notes);
+                DbUtils.AddParameter(cmd, "@DateCreated", groceryList.DateCreated);
+                DbUtils.AddParameter(cmd, "@DateUpdated", groceryList.DateUpdated);
+                DbUtils.AddParameter(cmd, "@IsOpen", groceryList.IsOpen);
+
+                groceryList.Id = (int)cmd.ExecuteScalar();
+            }
+        }
+    }
+
+    public void Update(GroceryList groceryList)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE GroceryList
+                                        SET
+                                            UserId = @UserId,
+                                            [Name] = @Name,
+                                            Notes = @Notes,
+		                                    DateCreated = @DateCreated,
+		                                    DateUpdated = @DateUpdated,
+		                                    IsOpen = @IsOpen
+                                    WHERE Id = @Id";
+
+                DbUtils.AddParameter(cmd, "@Id", groceryList.Id);
+                DbUtils.AddParameter(cmd, "@UserId", groceryList.UserId);
+                DbUtils.AddParameter(cmd, "@Name", groceryList.Name);
+                DbUtils.AddParameter(cmd, "@Notes", groceryList.Notes);
+                DbUtils.AddParameter(cmd, "@DateCreated", groceryList.DateCreated);
+                DbUtils.AddParameter(cmd, "@DateUpdated", groceryList.DateUpdated);
+                DbUtils.AddParameter(cmd, "@IsOpen", groceryList.IsOpen);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    public void Delete(int id)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM GroceryList WHERE Id = @Id";
+                DbUtils.AddParameter(cmd, "@Id", id);
+                cmd.ExecuteNonQuery();
             }
         }
     }

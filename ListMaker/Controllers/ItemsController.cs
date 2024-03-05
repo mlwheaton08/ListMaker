@@ -36,4 +36,23 @@ public class ItemsController : ControllerBase
         _itemRepo.Add(item);
         return CreatedAtAction("GetById", new { id = item.Id }, item);
     }
+
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, Item item)
+    {
+        if (id != item.Id)
+        {
+            return BadRequest();
+        }
+
+        _itemRepo.Update(item);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        _itemRepo.Delete(id);
+        return NoContent();
+    }
 }

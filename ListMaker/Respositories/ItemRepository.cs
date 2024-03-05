@@ -148,37 +148,44 @@ public class ItemRepository : BaseRepository, IItemRepository
         }
     }
 
-//    INSERT INTO GroceryListItem
-//    (GroceryListId,
-//    ItemId,
-//    Quantity,
-//    UnitMeas)
-//OUTPUT INSERTED.ID
-//VALUES
-//    (1,
-//    1,
-//    10,
-//    'lbs')
+    public void Update(Item item)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE Item
+                                        SET
+                                            UserId = @UserId,
+                                            StoreSectionId = @StoreSectionId,
+                                            [Name] = @Name,
+                                            Notes = @Notes,
+		                                    DateCreated = @DateCreated
+                                    WHERE Id = @Id";
+                DbUtils.AddParameter(cmd, "@Id", item.Id);
+                DbUtils.AddParameter(cmd, "@UserId", item.UserId);
+                DbUtils.AddParameter(cmd, "@StoreSectionId", item.StoreSectionId);
+                DbUtils.AddParameter(cmd, "@Name", item.Name);
+                DbUtils.AddParameter(cmd, "@Notes", item.Notes);
+                DbUtils.AddParameter(cmd, "@DateCreated", item.DateCreated);
 
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
 
-//UPDATE GroceryListItem
-//    SET
-//        GroceryListId = 2,
-//        ItemId = 2,
-//        Quantity = 5,
-//        UnitMeas = 'piles'
-//WHERE Id = 27
-
-
-//DELETE FROM GroceryListItem WHERE Id = 27
-
-
-//SELECT
-//    Id,
-//    GroceryListId,
-//    ItemId,
-//    Quantity,
-//    UnitMeas
-//FROM GroceryListItem
-//WHERE Id = 27
+    public void Delete(int id)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM Item WHERE Id = @Id";
+                DbUtils.AddParameter(cmd, "@Id", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
 }

@@ -142,11 +142,11 @@ public class RecipeRepository : BaseRepository, IRecipeRepository
                                         ss.[Name] as ItemStoreSectionName,
 	                                    ss.OrderPosition as ItemStoreSectionOrderPosition
                                     FROM Recipe r
-                                    JOIN RecipeItem ri
+                                    LEFT JOIN RecipeItem ri
 	                                    ON r.Id = ri.RecipeId
-                                    JOIN Item i
+                                    LEFT JOIN Item i
 	                                    ON i.Id = ri.ItemId
-                                    JOIN StoreSection ss
+                                    LEFT JOIN StoreSection ss
 	                                    ON i.StoreSectionId = ss.Id
                                     WHERE r.Id = @Id";
 
@@ -200,6 +200,75 @@ public class RecipeRepository : BaseRepository, IRecipeRepository
 
                 reader.Close();
                 return recipe;
+            }
+        }
+    }
+
+    public void Add(Recipe recipe)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO Recipe
+                                        (UserId,
+                                        [Name],
+                                        Notes,
+	                                    DateCreated)
+                                    OUTPUT INSERTED.ID
+                                    VALUES
+                                        (@UserId,
+                                        @Name,
+                                        @Notes,
+	                                    @DateCreated)";
+
+                DbUtils.AddParameter(cmd, "@UserId", recipe.UserId);
+                DbUtils.AddParameter(cmd, "@Name", recipe.Name);
+                DbUtils.AddParameter(cmd, "@Notes", recipe.Notes);
+                DbUtils.AddParameter(cmd, "@DateCreated", recipe.DateCreated);
+
+                recipe.Id = (int)cmd.ExecuteScalar();
+            }
+        }
+    }
+
+    public void Update(Recipe recipe)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE Recipe
+                                        SET
+                                            UserId = @UserId,
+                                            [Name] = @Name,
+                                            Notes = @Notes,
+		                                    DateCreated = @DateCreated
+                                    WHERE Id = @Id";
+
+                DbUtils.AddParameter(cmd, "@Id", recipe.Id);
+                DbUtils.AddParameter(cmd, "@UserId", recipe.UserId);
+                DbUtils.AddParameter(cmd, "@Name", recipe.Name);
+                DbUtils.AddParameter(cmd, "@Notes", recipe.Notes);
+                DbUtils.AddParameter(cmd, "@DateCreated", recipe.DateCreated);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    public void Delete(int id)
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM Recipe WHERE Id = @Id";
+                DbUtils.AddParameter(cmd, "@Id", id);
+                cmd.ExecuteNonQuery();
             }
         }
     }
