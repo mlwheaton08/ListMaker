@@ -1,0 +1,24 @@
+#nav-bar {
+    /* border: 1px solid red; */
+    width: 100vw;
+    height: var(--nav-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 13%;
+    background-color: var(--clr-background);
+}
+
+.navSection {
+    /* border: 1px solid white; */
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4em;
+}
+
+.navSection > * {
+    /* border: 1px solid blue; */
+}
