@@ -45,7 +45,7 @@ export function Nav() {
 
                 {/* Search bar */}
                 <div className={`flex flex-nowrap items-center gap-2 px-2 py-0.5 rounded-md bg-white bg-opacity-10 ${searchBarIsActive ? "border border-clr-accent" : ""}`}>
-                    {magnifyingGlassIcon(`h-5 ${searchBarIsActive ? "fill-clr-accent" : ""}`)}
+                    {magnifyingGlassIcon(`h-5 ${searchBarIsActive ? "fill-clr-accent" : "fill-clr-background"}`)}
                     <input
                         id="search-input"
                         autoComplete="off"
