@@ -1,12 +1,14 @@
 #nav-bar {
     /* border: 1px solid red; */
     width: 100vw;
+    max-width: 100%;
     height: var(--nav-height);
     position: fixed;
     top: 0;
     left: 0;
     display: flex;
     justify-content: space-between;
+    gap: 30px;
     padding: 0 13%;
     background-color: var(--clr-background);
 }

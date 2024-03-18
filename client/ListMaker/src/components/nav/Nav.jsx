@@ -17,14 +17,6 @@ export function Nav() {
     const [search, setSearch] = useState("")
     const [searchBarIsActive, setSearchBarIsActive] = useState(false)
 
-    document.body.addEventListener("click", (event) => {
-        if (document.activeElement.id === "search-input") {
-            setSearchBarIsActive(true)
-        } else {
-            setSearchBarIsActive(false)
-        }
-    })
-
     return (
         <div id="nav-bar">
             {/* Left side */}
@@ -40,17 +32,26 @@ export function Nav() {
                         alt="List Maker logo"
                         className="h-8"
                     />
-                    <h1 className="font-semibold">List Maker</h1>
+                    <h1 className="w-fit min-w-fit font-semibold">List Maker</h1>
                 </div>
 
                 {/* Search bar */}
-                <div className={`flex flex-nowrap items-center gap-2 px-2 py-0.5 rounded-md bg-white bg-opacity-10 ${searchBarIsActive ? "border border-clr-accent" : ""}`}>
-                    {magnifyingGlassIcon(`h-5 ${searchBarIsActive ? "fill-clr-accent" : "fill-clr-background"}`)}
+                <div>
+                    <label
+                        htmlFor="search-input"
+                        className="relative"
+                    >
+                        {magnifyingGlassIcon("absolute top-1/2 -translate-y-1/2 h-5 left-1.5 fill-clr-background")}
+                    </label>
                     <input
                         id="search-input"
+                        name="search-input"
                         autoComplete="off"
+                        className="pl-9 pr-2 py-0.5 rounded-md bg-white bg-opacity-10 focus:outline focus:outline-1 focus:outline-clr-accent"
                     />
                 </div>
+
+                {/* </div> */}
             </div>
 
             {/* Right side */}
@@ -64,7 +65,7 @@ export function Nav() {
                                 <Link
                                     key={`navItem-${index}`}
                                     to={item.navigateTo}
-                                    className="hover:text-clr-primary"
+                                    className="min-w-fit hover:text-clr-primary"
                                 >
                                     {item.text}
                                 </Link>
@@ -74,7 +75,7 @@ export function Nav() {
                 </nav>
 
                 {/* Account */}
-                {profileIcon("w-8 h-8 p-px rounded-full fill-clr-primary border-2 border-clr-foreground hover:cursor-pointer hover:border-clr-accent")}
+                {profileIcon("w-8 min-w-8 h-8 p-px rounded-full fill-clr-primary border-2 border-clr-foreground hover:cursor-pointer hover:border-clr-accent")}
             </div>
         </div>
     )
