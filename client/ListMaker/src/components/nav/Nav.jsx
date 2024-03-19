@@ -4,7 +4,7 @@ import { magnifyingGlassIcon } from "../../icons.jsx"
 import { useState } from "react"
 import { profileIcon } from "../../icons.jsx"
 
-export function Nav() {
+export function Nav({ navState, setNavState }) {
 
     const navItems = [
         {text: "Items", navigateTo: "/items"},
@@ -17,8 +17,18 @@ export function Nav() {
     const [search, setSearch] = useState("")
     const [searchBarIsActive, setSearchBarIsActive] = useState(false)
 
+    document.addEventListener("scroll", (event) => {
+		const scrollY = window.scrollY
+		const copy = {...navState}
+		copy.scrollY = scrollY
+		setNavState(copy)
+	})
+
     return (
-        <div id="nav-bar">
+        <div
+            id="nav-bar"
+            className={`${navState.scrollY > 0 ? "bg-clr-darker" : ""} transition-all duration-300`}
+        >
             {/* Left side */}
             <div className="navSection">
 
@@ -65,7 +75,8 @@ export function Nav() {
                                 <Link
                                     key={`navItem-${index}`}
                                     to={item.navigateTo}
-                                    className="min-w-fit hover:text-clr-primary"
+                                    className={`min-w-fit hover:text-clr-primary transition-all duration-200
+                                        ${navState.currentRoute === `/${item.text.toLowerCase()}` ? "text-clr-primary" : ""}`}
                                 >
                                     {item.text}
                                 </Link>
@@ -75,7 +86,7 @@ export function Nav() {
                 </nav>
 
                 {/* Account */}
-                {profileIcon("w-8 min-w-8 h-8 p-px rounded-full fill-clr-primary border-2 border-clr-foreground hover:cursor-pointer hover:border-clr-accent")}
+                {profileIcon("w-8 min-w-8 h-8 p-px rounded-full fill-clr-primary border-2 border-clr-foreground hover:cursor-pointer hover:border-clr-accent transition-all duration-200")}
             </div>
         </div>
     )

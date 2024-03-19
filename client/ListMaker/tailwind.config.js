@@ -12,6 +12,7 @@ export default {
 				"clr-primary": "var(--clr-primary)",
 				"clr-secondary": "var(--clr-secondary)",
 				"clr-accent": "var(--clr-accent)",
+				"clr-darker": "var(--clr-darker)",
 			},
 			height: {
 				"nav-height": "var(--nav-height)",
