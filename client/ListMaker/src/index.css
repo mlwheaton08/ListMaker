@@ -10,10 +10,12 @@
 	
 	--clr-foreground: var(--clr-dark);
 	--clr-background: var(--clr-light);
+	/* need to set these variables according to a light theme, and move the dark colors into the media query */
+	--clr-background-2: rgb(20, 20, 20);
+	--clr-background-3: rgb(43, 43, 43);
 	--clr-primary: rgb(224, 154, 49);
 	--clr-secondary: rgb(222, 76, 51);
 	--clr-accent: rgb(187, 75, 209);
-	--clr-darker: rgb(20, 20, 20);
 
 	--nav-height: 60px;
 	--screen-minus-nav-height: calc(100vh - var(--nav-height));

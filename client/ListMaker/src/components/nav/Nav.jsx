@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
 import "./Nav.css"
-import { magnifyingGlassIcon } from "../../icons.jsx"
 import { useState } from "react"
-import { profileIcon } from "../../icons.jsx"
+import { SearchBar } from "./SearchBar.jsx"
+import { AccountNavItem } from "./AccountNavItem.jsx"
 
 export function Nav({ navState, setNavState }) {
 
@@ -15,8 +15,9 @@ export function Nav({ navState, setNavState }) {
     const navigate = useNavigate()
 
     const [search, setSearch] = useState("")
-    const [searchBarIsActive, setSearchBarIsActive] = useState(false)
 
+    // it's nice to always have the scroll position set in state as it could prove useful down the road, but if it affects performance then maybe refactor to:
+        // navState object has "scrolled" boolean property instead of "scrollY", and the event listener only sets it to true when the scrollY is > 0
     document.addEventListener("scroll", (event) => {
 		const scrollY = window.scrollY
 		const copy = {...navState}
@@ -27,7 +28,7 @@ export function Nav({ navState, setNavState }) {
     return (
         <div
             id="nav-bar"
-            className={`${navState.scrollY > 0 ? "bg-clr-darker" : ""} transition-all duration-300`}
+            className={`${navState.scrollY > 0 ? "bg-clr-background-2" : ""} transition-all duration-500`}
         >
             {/* Left side */}
             <div className="navSection">
@@ -42,26 +43,12 @@ export function Nav({ navState, setNavState }) {
                         alt="List Maker logo"
                         className="h-8"
                     />
-                    <h1 className="w-fit min-w-fit font-semibold">List Maker</h1>
+                    <h1 className="truncate w-fit min-w-fit font-semibold">List Maker</h1>
                 </div>
 
                 {/* Search bar */}
-                <div>
-                    <label
-                        htmlFor="search-input"
-                        className="relative"
-                    >
-                        {magnifyingGlassIcon("absolute top-1/2 -translate-y-1/2 h-5 left-1.5 fill-clr-background")}
-                    </label>
-                    <input
-                        id="search-input"
-                        name="search-input"
-                        autoComplete="off"
-                        className="pl-9 pr-2 py-0.5 rounded-md bg-white bg-opacity-10 focus:outline focus:outline-1 focus:outline-clr-accent"
-                    />
-                </div>
+                <SearchBar />
 
-                {/* </div> */}
             </div>
 
             {/* Right side */}
@@ -76,7 +63,7 @@ export function Nav({ navState, setNavState }) {
                                     key={`navItem-${index}`}
                                     to={item.navigateTo}
                                     className={`min-w-fit hover:text-clr-primary transition-all duration-200
-                                        ${navState.currentRoute === `/${item.text.toLowerCase()}` ? "text-clr-primary" : ""}`}
+                                        ${navState.currentRoute === item.navigateTo ? "text-clr-primary" : ""}`}
                                 >
                                     {item.text}
                                 </Link>
@@ -86,7 +73,10 @@ export function Nav({ navState, setNavState }) {
                 </nav>
 
                 {/* Account */}
-                {profileIcon("w-8 min-w-8 h-8 p-px rounded-full fill-clr-primary border-2 border-clr-foreground hover:cursor-pointer hover:border-clr-accent transition-all duration-200")}
+                <AccountNavItem
+                    navState={navState}
+                />
+
             </div>
         </div>
     )
