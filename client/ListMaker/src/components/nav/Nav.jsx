@@ -3,6 +3,7 @@ import "./Nav.css"
 import { useState } from "react"
 import { SearchBar } from "./SearchBar.jsx"
 import { AccountNavItem } from "./AccountNavItem.jsx"
+import { MobileNav } from "./MobileNav.jsx"
 
 export function Nav({ navState, setNavState }) {
 
@@ -74,6 +75,10 @@ export function Nav({ navState, setNavState }) {
 
                 {/* Account */}
                 <AccountNavItem
+                    navState={navState}
+                />
+
+                <MobileNav
                     navState={navState}
                 />
 

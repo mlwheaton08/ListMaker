@@ -11,8 +11,8 @@
 	--clr-foreground: var(--clr-dark);
 	--clr-background: var(--clr-light);
 	/* need to set these variables according to a light theme, and move the dark colors into the media query */
-	--clr-background-2: rgb(20, 20, 20);
-	--clr-background-3: rgb(43, 43, 43);
+	--clr-background-2: rgb(219, 218, 218);
+	--clr-background-3: rgb(202, 199, 199);
 	--clr-primary: rgb(224, 154, 49);
 	--clr-secondary: rgb(222, 76, 51);
 	--clr-accent: rgb(187, 75, 209);
@@ -24,10 +24,29 @@
 	background-color: var(--clr-background);
 }
 
+input {
+	all: unset;
+	border: 1px solid var(--clr-background-2);
+	background-color: var(--clr-background);
+}
+
+svg {
+	fill: var(--clr-background-3);
+}
+
 @media (prefers-color-scheme: dark) {
 	:root {
 		--clr-foreground: var(--clr-light);
 		--clr-background: var(--clr-dark);
+		--clr-background-2: rgb(20, 20, 20);
+		--clr-background-3: rgb(43, 43, 43);
+	}
+	input {
+		border: none;
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+	svg {
+		fill: var(--clr-background);
 	}
 	/* a:hover {
 		color: #747bff;
@@ -37,13 +56,6 @@
 	} */
 }
 
-input {
-	all: unset;
-}
-
-svg {
-	fill: var(--clr-foreground);
-}
 
 /* a {
 	font-weight: 500;

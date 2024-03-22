@@ -13,7 +13,7 @@ export default {
 				"clr-background-3": "var(--clr-background-3)",
 				"clr-primary": "var(--clr-primary)",
 				"clr-secondary": "var(--clr-secondary)",
-				"clr-accent": "var(--clr-accent)",
+				"clr-accent": "var(--clr-accent)"
 			},
 			height: {
 				"nav-height": "var(--nav-height)",
