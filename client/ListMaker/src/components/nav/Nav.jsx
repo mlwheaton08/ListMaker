@@ -4,18 +4,28 @@ import { useState } from "react"
 import { SearchBar } from "./SearchBar.jsx"
 import { AccountNavItem } from "./AccountNavItem.jsx"
 import { MobileNav } from "./MobileNav.jsx"
+import { DesktopNav } from "./DesktopNev.jsx"
 
 export function Nav({ navState, setNavState }) {
 
-    const navItems = [
-        {text: "Items", navigateTo: "/items"},
-        {text: "Recipes", navigateTo: "/recipes"},
-        {text: "Grocery Lists", navigateTo: "/groceryLists"}
-    ]
-
-    const navigate = useNavigate()
+    const navItems = {
+        main: [
+            {text: "Items", navigateTo: "/items"},
+            {text: "Recipes", navigateTo: "/recipes"},
+            {text: "Grocery Lists", navigateTo: "/groceryLists"}
+        ],
+        account: [
+            {text: "My Lists", navigateTo: "/ml"},
+            {text: "My Recipes", navigateTo: "/mr"},
+            {text: "My Items", navigateTo: "/mi"},
+            {text: "Settings", navigateTo: "/s"},
+            {text: "Sign Out", navigateTo: "/so"}
+        ]
+    }
 
     const [search, setSearch] = useState("")
+
+    const navigate = useNavigate()
 
     // it's nice to always have the scroll position set in state as it could prove useful down the road, but if it affects performance then maybe refactor to:
         // navState object has "scrolled" boolean property instead of "scrollY", and the event listener only sets it to true when the scrollY is > 0
@@ -42,9 +52,9 @@ export function Nav({ navState, setNavState }) {
                     <img
                         src="../../../public/listMaker.svg"
                         alt="List Maker logo"
-                        className="h-8"
+                        className="h-8 min-w-8"
                     />
-                    <h1 className="truncate w-fit min-w-fit font-semibold">List Maker</h1>
+                    <h1 id="nav-logo-text" className="truncate w-fit min-w-fit font-semibold">List Maker</h1>
                 </div>
 
                 {/* Search bar */}
@@ -53,36 +63,9 @@ export function Nav({ navState, setNavState }) {
             </div>
 
             {/* Right side */}
-            <div className="navSection">
+            <DesktopNav navState={navState} navItems={navItems} />
+            <MobileNav navState={navState} navItems={navItems} />
 
-                {/* Nav items */}
-                <nav className="flex flex-nowrap items-center gap-8">
-                    {
-                        navItems.map((item, index) => {
-                            return (
-                                <Link
-                                    key={`navItem-${index}`}
-                                    to={item.navigateTo}
-                                    className={`min-w-fit hover:text-clr-primary transition-all duration-200
-                                        ${navState.currentRoute === item.navigateTo ? "text-clr-primary" : ""}`}
-                                >
-                                    {item.text}
-                                </Link>
-                            )
-                        })
-                    }
-                </nav>
-
-                {/* Account */}
-                <AccountNavItem
-                    navState={navState}
-                />
-
-                <MobileNav
-                    navState={navState}
-                />
-
-            </div>
         </div>
     )
 }

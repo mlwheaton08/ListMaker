@@ -8,18 +8,45 @@ import { Recipes } from './components/recipes/Recipes'
 
 export default function App() {
 
-	const location = useLocation()
-
+	// const [screenSize, setScreenSize] = useState({
+	// 	width: window.innerWidth,
+	// 	device: "desktop"
+	// })
 	const [navState, setNavState] = useState({
 		scrollY: 0,
 		currentRoute: ""
 	})
+
+	const location = useLocation()
+
+	// const updateScreenSize = () => {
+	// 	const copy = {...screenSize}
+	// 	const width = window.innerWidth
+	// 	copy.width = width
+	// 	if (width < 600){
+	// 		copy.device = "mobile"
+	// 	} else if (width > 600 && width < 970) {
+	// 		copy.device = "tablet"
+	// 	} else {
+	// 		copy.device = "desktop"
+	// 	}
+	// 	setScreenSize(copy)
+	// }
 
 	useEffect(() => {
 		const copy = {...navState}
 		copy.currentRoute = location.pathname
 		setNavState(copy)
 	},[location])
+
+	// useEffect(() => {
+	// 	updateScreenSize()
+	// },[])
+
+	// window.addEventListener("resize", (e) => {
+	// 	console.log(window.innerWidth)
+	// })
+
 
 	return (
 		<Routes>
