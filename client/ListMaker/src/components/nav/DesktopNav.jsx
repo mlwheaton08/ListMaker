@@ -6,7 +6,7 @@ export function DesktopNav({ navState, navItems }) {
     const navigate = useNavigate()
 
     return (
-        <div id="desktop-nav" className="navSection">
+        <div id="desktop-nav" className="navSection ml-auto">
 
             {/* Nav items */}
             <nav className="flex flex-nowrap items-center gap-8">

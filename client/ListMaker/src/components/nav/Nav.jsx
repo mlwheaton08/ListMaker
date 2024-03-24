@@ -4,7 +4,7 @@ import { useState } from "react"
 import { SearchBar } from "./SearchBar.jsx"
 import { AccountNavItem } from "./AccountNavItem.jsx"
 import { MobileNav } from "./MobileNav.jsx"
-import { DesktopNav } from "./DesktopNev.jsx"
+import { DesktopNav } from "./DesktopNav.jsx"
 
 export function Nav({ navState, setNavState }) {
 
@@ -42,7 +42,7 @@ export function Nav({ navState, setNavState }) {
             className={`${navState.scrollY > 0 ? "bg-clr-background-2" : ""} transition-all duration-500`}
         >
             {/* Left side */}
-            <div className="navSection">
+            <div id="nav-left" className="navSection">
 
                 {/* Logo and title */}
                 <div
@@ -57,10 +57,11 @@ export function Nav({ navState, setNavState }) {
                     <h1 id="nav-logo-text" className="truncate w-fit min-w-fit font-semibold">List Maker</h1>
                 </div>
 
-                {/* Search bar */}
-                <SearchBar />
 
             </div>
+
+            {/* Search bar */}
+            <SearchBar />
 
             {/* Right side */}
             <DesktopNav navState={navState} navItems={navItems} />
