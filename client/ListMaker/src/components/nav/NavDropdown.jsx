@@ -49,28 +49,24 @@ export function NavDropdown({ properties }) {
                 {/* Spacer */}
                 <div className={properties.spacer.className}></div>
                 
-                {
-                    !showDropdown
-                        ? ""
-                        : <nav
-                            id={properties.dropdown.id}
-                            className={`navDropdown ${!showDropdown ? "hidden" : ""}`}
-                        >
-                            {
-                                properties.navItems.map((item, index) => {
-                                    return (
-                                        <Link
-                                            key={`navItem-${index}`}
-                                            to={item.navigateTo}
-                                            className={properties.dropdown.children.className}
-                                        >
-                                            {item.text}
-                                        </Link>
-                                    )
-                                })
-                            }
-                        </nav>
-                }
+                <nav
+                    id={properties.dropdown.id}
+                    className={`navDropdown ${!showDropdown ? "hide" : ""}`}
+                >
+                    {
+                        properties.navItems.map((item, index) => {
+                            return (
+                                <Link
+                                    key={`navItem-${index}`}
+                                    to={item.navigateTo}
+                                    className={properties.dropdown.children.className}
+                                >
+                                    {item.text}
+                                </Link>
+                            )
+                        })
+                    }
+                </nav>
                 
             </div>
         </div>

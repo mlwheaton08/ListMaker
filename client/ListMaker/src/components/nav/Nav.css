@@ -34,9 +34,11 @@
 }
 
 .navDropdown {
+    opacity: 1;
+    visibility: visible;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translateX(-50%);
     width: 170px;
     display: flex;
     flex-direction: column;
@@ -45,6 +47,14 @@
     border-radius: 6px;
     padding: 10px 0;
     background-color: var(--clr-background-clear);
+    transition: all 200ms ease;
+}
+
+.navDropdown.hide {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -20px);
+    transition: all 200ms ease;
 }
 
 .dropdownNavItem {
@@ -90,6 +100,9 @@
         transform: none;
         width: 100vw;
         border-radius: 0;
+    }
+    .navDropdown.hide {
+        transform: translateX(20px);
     }
 }
 
