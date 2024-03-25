@@ -15,7 +15,7 @@ export function SearchBar() {
 
 
     return (
-        <div className="navSection">
+        <div id="nav-search-bar" className="navSection">
             {/* Icon */}
             <div>
                 {

@@ -6,9 +6,12 @@
     top: 0;
     left: 0;
     display: flex;
-    justify-content: space-between;
     gap: 30px;
     padding: 0 13%;
+}
+
+.navMain {
+    margin-left: auto;
 }
 
 .navSection {
@@ -30,9 +33,29 @@
     padding: 2px 8px;
 }
 
+.navDropdown {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    border-radius: 6px;
+    padding: 10px 0;
+    background-color: var(--clr-background-clear);
+}
+
+.dropdownNavItem {
+    width: 100%;
+    padding: 6px 0;
+    text-align: center;
+}
+
 /* Desktop Only */
 @media screen and (min-width: 970px) {
-    #mobile-nav {
+    .navMain.mobile {
         display: none;
     }
 }
@@ -49,21 +72,32 @@
 
 /* Tablet and Smaller */
 @media screen and (max-width: 970px) {
+    #nav-bar {
+        padding: 0 9%;
+    }
     #search-input {
-        width: 30vw;
+        width: 32vw;
     }
     #search-input:focus {
-        width: calc(30vw + 32px);
+        width: calc(32vw + 32px);
     }
-    #desktop-nav {
+    .navMain.desktop {
         display: none;
+    }
+    .navDropdown {
+        position: fixed;
+        left: 0;
+        transform: none;
+        width: 100vw;
+        border-radius: 0;
     }
 }
 
-/* Skinny Mobile */
+/* Mobile */
 @media screen and (max-width: 600px) {
     #nav-bar {
-        gap: 10px;
+        gap: 20px;
+        padding: 0 5%;
     }
     .navSection {
         gap: 10px;
@@ -71,4 +105,19 @@
     #nav-logo-text {
         display: none;
     }
+    /* #mobile-nav-dropdown {
+        width: 80vw;
+    }
+    #mobile-nav-dropdown > * {
+        text-align: center;
+    } */
 }
+
+
+/* This doesn't keep navbar at full width of screen for some reason. not a priority though */
+/* Skinny Mobile */
+/* @media screen and (max-width: 300px) {
+    #nav-bar {
+        min-width: 100vw;
+    }
+} */

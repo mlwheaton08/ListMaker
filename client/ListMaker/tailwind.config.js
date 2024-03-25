@@ -11,6 +11,8 @@ export default {
 				"clr-background": "var(--clr-background)",
 				"clr-background-2": "var(--clr-background-2)",
 				"clr-background-3": "var(--clr-background-3)",
+				"clr-background-4": "var(--clr-background-4)",
+				"clr-background-clear": "var(--clr-background-clear)",
 				"clr-primary": "var(--clr-primary)",
 				"clr-secondary": "var(--clr-secondary)",
 				"clr-accent": "var(--clr-accent)"

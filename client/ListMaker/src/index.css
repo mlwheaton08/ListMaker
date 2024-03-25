@@ -11,8 +11,10 @@
 	--clr-foreground: var(--clr-dark);
 	--clr-background: var(--clr-light);
 	/* need to set these variables according to a light theme, and move the dark colors into the media query */
-	--clr-background-2: rgb(219, 218, 218);
-	--clr-background-3: rgb(202, 199, 199);
+	--clr-background-2: rgb(218, 218, 218);
+	--clr-background-3: rgb(199, 199, 199);
+	--clr-background-4: rgb(180, 180, 180);
+	--clr-background-clear: rgba(12, 12, 12, 0.95);
 	--clr-primary: rgb(224, 154, 49);
 	--clr-secondary: rgb(222, 76, 51);
 	--clr-accent: rgb(187, 75, 209);
@@ -32,6 +34,7 @@ input {
 
 svg {
 	fill: var(--clr-background-3);
+	aspect-ratio: 1/1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,6 +43,7 @@ svg {
 		--clr-background: var(--clr-dark);
 		--clr-background-2: rgb(20, 20, 20);
 		--clr-background-3: rgb(43, 43, 43);
+		--clr-background-4: rgb(54, 54, 54);
 	}
 	input {
 		border: none;
@@ -54,6 +58,12 @@ svg {
 	button {
 		background-color: #f9f9f9;
 	} */
+}
+
+@media screen and (max-width: 600px) {
+	:root {
+		--nav-height: 50px;
+	}
 }
 
 
