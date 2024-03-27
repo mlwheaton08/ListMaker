@@ -1,66 +1,21 @@
+import "./Home.css"
+
 export function Home() {
 
     return (
-        <div className="mt-nav-height text-center">
-            <p>a;sdlfkj</p>
-            <h1>Homepage</h1>
-            <p>psdfffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>
-            <p>psssssssssssssssssssss</p>
-            <p>pssdddddddddddddddddddd</p>
-            <p>pddfffffffffffffffffffffffffff</p>
-            <p>paaaaaaaaaaaaaa</p>
-            <p>paffffffffffffffffffffffffffffffffffffffffffffffffff</p>
-            <p>psssssssssssssssssssssssss</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
-            <p>p</p>
+        <div>
+            <img
+                id="home-splash-img"
+                src="../../../public/homeSplash.jpg"
+                alt="List Maker logo"
+            />
+            <div id="home-splash-overlay"></div>
+
+            <div id="home-container">
+                <button className="bg-clr-primary text-clr-background rounded px-3 py-1 hover:text-clr-background-2 hover:bg-clr-secondary transition-all duration-200">
+                    Make a new list
+                </button>
+            </div>
         </div>
     )
 }

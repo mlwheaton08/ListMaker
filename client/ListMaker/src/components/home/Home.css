@@ -1,0 +1,26 @@
+#home-splash-img {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    opacity: 0.3;
+    min-width: 1920px;
+    overflow: hidden;
+}
+
+#home-splash-overlay {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(
+        var(--clr-background),
+        rgba(0, 0, 0, 0),
+        var(--clr-background));
+}
+
+#home-container {
+    padding-top: var(--nav-height);
+}

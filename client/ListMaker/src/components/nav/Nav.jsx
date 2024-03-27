@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom"
 import "./Nav.css"
 import { useState } from "react"
 import { SearchBar } from "./SearchBar.jsx"
-import { NavDropdown } from "./NavDropdown.jsx"
-import { navDropdowns } from "./navDropdowns.js"
+import { AccountNav } from "./AccountNav.jsx"
+import { MobileNav } from "./MobileNav.jsx"
 
 export function Nav({ navState, setNavState }) {
 
@@ -71,8 +71,8 @@ export function Nav({ navState, setNavState }) {
                 </nav>
             </div>
 
-            <NavDropdown properties={navDropdowns.mobileNav} />
-            <NavDropdown properties={navDropdowns.accountNav} />
+            <MobileNav navItems={navItems} />
+            <AccountNav />
 
         </div>
     )
