@@ -4,11 +4,10 @@ import { Link } from "react-router-dom"
 export function AccountNav() {
 
     const navItems = [
-        {text: "My Lists", navigateTo: "/ml"},
-        {text: "My Recipes", navigateTo: "/mr"},
-        {text: "My Items", navigateTo: "/mi"},
-        {text: "Settings", navigateTo: "/s"},
-        {text: "Sign Out", navigateTo: "/so"}
+        {text: "My List", navigateTo: "/list/(id for most recently updated open list)"},
+        {text: "Dashboard", navigateTo: "/dashboard"},
+        {text: "Settings", navigateTo: "/settings"},
+        {text: "Sign Out", navigateTo: "/login"}
     ]
 
     const [showDropdown, setShowDropdown] = useState(false)

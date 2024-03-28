@@ -5,6 +5,7 @@ import { Nav } from './components/nav/Nav'
 import { Home } from './components/home/Home'
 import { Items } from './components/items/Items'
 import { Recipes } from './components/recipes/Recipes'
+import { Dashboard } from './components/dashboard/Dashboard'
 
 export default function App() {
 
@@ -61,8 +62,9 @@ export default function App() {
 			}>
 
 				<Route path="/" element={ <Home /> } />
-				<Route path="/items" element={ <Items /> } />
 				<Route path="/recipes" element={ <Recipes /> } />
+				<Route path="/items" element={ <Items /> } />
+				<Route path="/dashboard" element={ <Dashboard /> } />
 
 			</Route>
 		</Routes>
