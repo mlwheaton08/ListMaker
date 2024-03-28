@@ -1,0 +1,156 @@
+#nav-bar {
+    width: 100vw;
+    /* max-width: 100%; */
+    height: var(--nav-height);
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    display: flex;
+    gap: 30px;
+    padding: 0 13%;
+}
+
+.navMain {
+    margin-left: auto;
+}
+
+.navSection {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4em;
+}
+
+#search-input {
+    width: 9vw;
+    padding: 2px 8px 2px 40px;
+    border-radius: 6px;
+    transition: all 300ms;
+}
+
+#search-input:focus {
+    width: calc(9vw + 32px);
+    padding: 2px 8px;
+}
+
+.dropdownIcon {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 200ms ease;
+}
+
+.dropdownIcon.account {
+    height: 55%;
+    padding: 1px;
+    border-radius: 50%;
+    border: 2px solid var(--clr-foreground);
+    fill: var(--clr-accent);
+}
+
+.dropdownIcon.mobile {
+    height: 50%;
+    fill: var(--clr-foreground);
+}
+
+.dropdownIcon.account.active {
+    border-color: var(--clr-accent);
+}
+
+.dropdownIcon.mobile.active {
+    fill: var(--clr-primary);
+}
+
+.navDropdown {
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    border-radius: 6px;
+    padding: 10px 0;
+    background-color: var(--clr-background-clear);
+    transition: all 200ms ease;
+}
+
+.navDropdown.hide {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -20px);
+    transition: all 200ms ease;
+}
+
+.navDropdown.account a:last-child:hover {
+    color: red;
+}
+
+/* Desktop Only */
+@media screen and (min-width: 970px) {
+    .navMain.mobile {
+        display: none;
+    }
+}
+
+/* Small Desktop and Smaller */
+@media screen and (max-width: 1300px) {
+    #search-input {
+        width: 11vw;
+    }
+    #search-input:focus {
+        width: calc(11vw + 32px);
+    }
+}
+
+/* Tablet and Smaller */
+@media screen and (max-width: 970px) {
+    #nav-bar {
+        padding: 0 9%;
+    }
+    #search-input {
+        width: 32vw;
+    }
+    #search-input:focus {
+        width: calc(32vw + 32px);
+    }
+    .navMain.desktop {
+        display: none;
+    }
+    .navDropdown {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        transform: none;
+        width: 100vw;
+        border-radius: 0;
+    }
+    .navDropdown.hide {
+        transform: translateX(20px);
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 600px) {
+    #nav-bar {
+        gap: 20px;
+        padding: 0 5%;
+    }
+    #nav-logo-text {
+        display: none;
+    }
+}
+
+
+/* This doesn't keep navbar at full width of screen for some reason. not a priority though */
+/* Skinny Mobile */
+/* @media screen and (max-width: 300px) {
+    #nav-bar {
+        min-width: 100vw;
+    }
+} */

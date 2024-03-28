@@ -1,68 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	color-scheme: light dark;
+	--clr-light: rgb(244, 244, 244);
+	--clr-dark: rgb(27, 27, 27);
+	
+	--clr-foreground: var(--clr-dark);
+	--clr-background: var(--clr-light);
+	/* need to set these variables according to a light theme, and move the dark colors into the media query */
+	--clr-background-2: rgb(218, 218, 218);
+	--clr-background-3: rgb(199, 199, 199);
+	--clr-background-4: rgb(180, 180, 180);
+	--clr-background-clear: rgba(12, 12, 12, 0.95);
+	--clr-primary: rgb(224, 154, 49);
+	--clr-secondary: rgb(222, 76, 51);
+	--clr-accent: rgb(187, 75, 209);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+	--nav-height: 60px;
+	--screen-minus-nav-height: calc(100vh - var(--nav-height));
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	color: var(--clr-foreground);
+	background-color: var(--clr-background);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+input {
+	all: unset;
+	border: 1px solid var(--clr-background-2);
+	background-color: var(--clr-background);
+}
+
+svg {
+	fill: var(--clr-background-3);
+	aspect-ratio: 1/1;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--clr-foreground: var(--clr-light);
+		--clr-background: var(--clr-dark);
+		--clr-background-2: rgb(20, 20, 20);
+		--clr-background-3: rgb(43, 43, 43);
+		--clr-background-4: rgb(54, 54, 54);
+	}
+	input {
+		border: none;
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+	svg {
+		fill: var(--clr-background);
+	}
+	/* a:hover {
+		color: #747bff;
+	}
+	button {
+		background-color: #f9f9f9;
+	} */
+}
+
+@media screen and (max-width: 600px) {
+	:root {
+		--nav-height: 50px;
+	}
+}
+
+
+/* a {
+	font-weight: 500;
+	color: #646cff;
+	text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  	color: #535bf2;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+	margin: 0;
+	display: flex;
+	place-items: center;
+	min-width: 320px;
+	min-height: 100vh;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	padding: 0.6em 1.2em;
+	font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+	background-color: #1a1a1a;
+	cursor: pointer;
+	transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  	border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+  	outline: 4px auto -webkit-focus-ring-color;
+} */

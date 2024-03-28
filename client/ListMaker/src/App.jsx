@@ -1,35 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { Nav } from './components/nav/Nav'
+import { Home } from './components/home/Home'
+import { Items } from './components/items/Items'
+import { Recipes } from './components/recipes/Recipes'
+import { Dashboard } from './components/dashboard/Dashboard'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	// const [screenSize, setScreenSize] = useState({
+	// 	width: window.innerWidth,
+	// 	device: "desktop"
+	// })
+	const [navState, setNavState] = useState({
+		scrollY: 0,
+		currentRoute: ""
+	})
+
+	const location = useLocation()
+
+	// const updateScreenSize = () => {
+	// 	const copy = {...screenSize}
+	// 	const width = window.innerWidth
+	// 	copy.width = width
+	// 	if (width < 600){
+	// 		copy.device = "mobile"
+	// 	} else if (width > 600 && width < 970) {
+	// 		copy.device = "tablet"
+	// 	} else {
+	// 		copy.device = "desktop"
+	// 	}
+	// 	setScreenSize(copy)
+	// }
+
+	useEffect(() => {
+		const copy = {...navState}
+		copy.currentRoute = location.pathname
+		setNavState(copy)
+	},[location])
+
+	// useEffect(() => {
+	// 	updateScreenSize()
+	// },[])
+
+	// window.addEventListener("resize", (e) => {
+	// 	console.log(window.innerWidth)
+	// })
+
+
+	return (
+		<Routes>
+			<Route path="/" element={
+				<>
+					<Nav
+						navState={navState}
+						setNavState={setNavState}
+					/>
+					<Outlet />
+				</>
+			}>
+
+				<Route path="/" element={ <Home /> } />
+				<Route path="/recipes" element={ <Recipes /> } />
+				<Route path="/items" element={ <Items /> } />
+				<Route path="/dashboard" element={ <Dashboard /> } />
+
+			</Route>
+		</Routes>
+	)
 }
-
-export default App
