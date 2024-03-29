@@ -1,19 +1,58 @@
+import { useState } from "react"
 import "./Dashboard.css"
 import { DashboardLists } from "./dashboardContainers/DashboardLists"
+import { DashboardRecipes } from "./dashboardContainers/DashboardRecipes"
+import { DashboardItems } from "./dashboardContainers/DashboardItems"
 
 export function Dashboard() {
+
+    const navItems = [
+        {text: "Lists", onClick: () => setView("Lists")},
+        {text: "Recipes", onClick: () => setView("Recipes")},
+        {text: "Items", onClick: () => setView("Items")}
+    ]
+    const [view, setView] = useState("Lists")
+
 
     return (
         <div id="dashboard">
             <div id="dashboard-container">
-                <h1 className="container left top">Dashboard</h1>
-                <nav className="container right top">
-                    <h2>Lists</h2>
+                <h1 className="container">Dashboard</h1>
+                <nav className="container">
+                    {/* <h2>Lists</h2>
                     <h2>Recipes</h2>
-                    <h2>Items</h2>
+                    <h2>Items</h2> */}
+                    {
+                        navItems.map((item, index) => {
+                            return (
+                                <h2
+                                    key={`dashboard-nav-item-${index}`}
+                                    onClick={item.onClick}
+                                    className={`hover:cursor-pointer ${view === item.text ? "underline" : ""}`}
+                                >
+                                    {item.text}
+                                </h2>
+                            )
+                        })
+                    }
                 </nav>
 
-                <DashboardLists />
+                {
+                    view === "Lists"
+                        ? <DashboardLists />
+                        : ""
+                }
+                {
+                    view === "Recipes"
+                        ? <DashboardRecipes />
+                        : ""
+                }
+                {
+                    view === "Items"
+                        ? <DashboardItems />
+                        : ""
+                }
+
             </div>
         </div>
     )
