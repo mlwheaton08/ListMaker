@@ -1,12 +1,12 @@
 #dashboard {
-    border: 1px solid white;
+    /* border: 1px solid white; */
     position: relative;
     height: calc(100vh - var(--nav-height));
     margin-top: var(--nav-height);
 }
 
 #dashboard-container {
-    border: 1px solid purple;
+    /* border: 1px solid purple; */
     position: absolute;
     width: 85%;
     height: 96%;
@@ -22,11 +22,12 @@
 * {
     min-width: fit-content;
     min-height: fit-content;
+    border-radius: 6px;
 }
 
 #dashboard-container >
 h1 {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 30%;
     height: 10%;
     font-size: 2.5em;
@@ -35,7 +36,7 @@ h1 {
 
 #dashboard-container >
 nav {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 70%;
     height: 10%;
     display: flex;
@@ -46,11 +47,12 @@ nav {
     font-weight: lighter;
 }
 
+/* Maybe call the section and use the nth selector to get specific sections?
+    Not sure if that helps prevent it from getting messy or not... */
 #dashboard-container >
 .container.main {
     width: 30%;
     height: 90%;
-    overflow-y: auto;
 }
 
 #dashboard-container >
@@ -58,12 +60,31 @@ nav {
     width: 70%;
     height: 90%;
     overflow-y: auto;
+    background-color: var(--clr-background-2);
 }
 
 .container.lists,
 .container.recipes,
 .container.items {
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
+}
+
+#dashboard-container >
+.container.main.lists >
+header {
+    background-color: var(--clr-background-3);
+    height: 6%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#dashboard-container >
+.container.main.lists >
+.content {
+    height: 94%;
+    overflow-y: auto;
+    background-color: var(--clr-background-2);
 }
 
 /* Desktop */

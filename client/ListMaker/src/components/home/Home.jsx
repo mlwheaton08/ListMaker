@@ -13,7 +13,7 @@ export function Home() {
 
             <div id="home-container">
                 <h1 className="text-4xl">Make shopping easier.</h1>
-                <button className="bg-clr-primary text-clr-background rounded px-3 py-1 hover:text-clr-background-2 hover:bg-clr-secondary transition-all duration-200">
+                <button className="px-3 py-1">
                     Start a new grocery list
                 </button>
             </div>
