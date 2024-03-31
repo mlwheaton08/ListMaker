@@ -1,4 +1,5 @@
 import { useState } from "react"
+import styles from "./Nav.module.css"
 
 export function SearchBar() {
 
@@ -15,7 +16,7 @@ export function SearchBar() {
 
 
     return (
-        <div id="nav-search-bar" className="navSection">
+        <div className="navSection">
             {/* Icon */}
             <div>
                 {

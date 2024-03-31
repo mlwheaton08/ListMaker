@@ -1,4 +1,4 @@
-import "./Home.css"
+import mod from "./Home.module.css"
 
 export function Home() {
 
@@ -12,7 +12,7 @@ export function Home() {
             <div id="home-splash-overlay"></div>
 
             <div id="home-container">
-                <h1 className="text-4xl">Make shopping easier.</h1>
+                <h1 className={mod.log}>Make shopping easier.</h1>
                 <button className="px-3 py-1">
                     Start a new grocery list
                 </button>

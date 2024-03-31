@@ -1,6 +1,5 @@
-#nav-bar {
+.main {
     width: 100vw;
-    /* max-width: 100%; */
     height: var(--nav-height);
     position: fixed;
     z-index: 10;
@@ -15,11 +14,19 @@
     margin-left: auto;
 }
 
-.navSection {
+.section {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
     gap: 4em;
+}
+
+.logoText {
+    min-width: fit-content;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #search-input {
@@ -109,7 +116,7 @@
 
 /* Tablet and Smaller */
 @media screen and (max-width: 970px) {
-    #nav-bar {
+    .main {
         padding: 0 9%;
     }
     #search-input {
@@ -118,7 +125,7 @@
     #search-input:focus {
         width: calc(32vw + 32px);
     }
-    .navMain.desktop {
+    .browseDesktop {
         display: none;
     }
     .navDropdown {
@@ -136,11 +143,11 @@
 
 /* Mobile */
 @media screen and (max-width: 600px) {
-    #nav-bar {
+    .main {
         gap: 20px;
         padding: 0 5%;
     }
-    #nav-logo-text {
+    .logoText {
         display: none;
     }
 }
@@ -149,7 +156,7 @@
 /* This doesn't keep navbar at full width of screen for some reason. not a priority though */
 /* Skinny Mobile */
 /* @media screen and (max-width: 300px) {
-    #nav-bar {
+    .main {
         min-width: 100vw;
     }
 } */
