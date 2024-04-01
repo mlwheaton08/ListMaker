@@ -10,10 +10,6 @@
     padding: 0 13%;
 }
 
-.navMain {
-    margin-left: auto;
-}
-
 .section {
     display: flex;
     align-items: center;
@@ -29,15 +25,20 @@
     white-space: nowrap;
 }
 
-#search-input {
+.searchInput {
     width: 9vw;
     padding-left: 40px;
     transition: all 300ms;
 }
 
-#search-input:focus {
+.searchInput:focus {
     width: calc(9vw + 32px);
     padding-left: 8px;
+}
+
+.browseDesktop,
+.browseMobile {
+    margin-left: auto;
 }
 
 .dropdownIcon {
@@ -60,15 +61,15 @@
     fill: var(--clr-foreground);
 }
 
-.dropdownIcon.account.active {
-    border-color: var(--clr-accent);
-}
-
 .dropdownIcon.mobile.active {
     fill: var(--clr-primary);
 }
 
-.navDropdown {
+.dropdownIcon.account.active {
+    border-color: var(--clr-accent);
+}
+
+.dropdownMenu {
     opacity: 1;
     visibility: visible;
     position: absolute;
@@ -86,30 +87,30 @@
     transition: all 200ms ease;
 }
 
-.navDropdown.hide {
+.dropdownMenu.hide {
     opacity: 0;
     visibility: hidden;
     transform: translate(-50%, -20px);
     transition: all 200ms ease;
 }
 
-.navDropdown.account a:last-child:hover {
+.dropdownMenu.account a:last-child:hover {
     color: red;
 }
 
 /* Desktop Only */
 @media screen and (min-width: 970px) {
-    .navMain.mobile {
+    .browseMobile {
         display: none;
     }
 }
 
 /* Small Desktop and Smaller */
 @media screen and (max-width: 1300px) {
-    #search-input {
+    .searchInput {
         width: 11vw;
     }
-    #search-input:focus {
+    .searchInput:focus {
         width: calc(11vw + 32px);
     }
 }
@@ -119,16 +120,16 @@
     .main {
         padding: 0 9%;
     }
-    #search-input {
+    .searchInput {
         width: 32vw;
     }
-    #search-input:focus {
+    .searchInput:focus {
         width: calc(32vw + 32px);
     }
     .browseDesktop {
         display: none;
     }
-    .navDropdown {
+    .dropdownMenu {
         position: fixed;
         top: var(--nav-height);
         left: 0;
@@ -136,7 +137,7 @@
         width: 100vw;
         border-radius: 0;
     }
-    .navDropdown.hide {
+    .dropdownMenu.hide {
         transform: translateX(20px);
     }
 }

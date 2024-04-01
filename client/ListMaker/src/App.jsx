@@ -6,6 +6,7 @@ import { Home } from './components/home/Home'
 import { Items } from './components/items/Items'
 import { Recipes } from './components/recipes/Recipes'
 import { Dashboard } from './components/dashboard/Dashboard'
+import { Dashboard2 } from './components/dashboard/Dashboard2'
 
 export default function App() {
 
@@ -64,7 +65,7 @@ export default function App() {
 				<Route path="/" element={ <Home /> } />
 				<Route path="/recipes" element={ <Recipes /> } />
 				<Route path="/items" element={ <Items /> } />
-				<Route path="/dashboard" element={ <Dashboard /> } />
+				<Route path="/dashboard" element={ <Dashboard2 /> } />
 
 			</Route>
 		</Routes>

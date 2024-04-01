@@ -1,8 +1,8 @@
 import { useState } from "react"
 import "./Dashboard.css"
-import { DashboardLists } from "./dashboardContainers/DashboardLists"
-import { DashboardRecipes } from "./dashboardContainers/DashboardRecipes"
-import { DashboardItems } from "./dashboardContainers/DashboardItems"
+import { DashboardLists } from "./DashboardLists"
+import { DashboardRecipes } from "./DashboardRecipes"
+import { DashboardItems } from "./DashboardItems"
 
 export function Dashboard() {
 

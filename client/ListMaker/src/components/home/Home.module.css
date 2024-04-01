@@ -1,4 +1,4 @@
-#home-splash-img {
+.backgroundImg {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
@@ -8,7 +8,7 @@
     overflow: hidden;
 }
 
-#home-splash-overlay {
+.backgroundOverlay {
     position: fixed;
     z-index: -1;
     top: 0;
@@ -21,15 +21,10 @@
         var(--clr-background));
 }
 
-#home-container {
+.main {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
     padding-top: calc(var(--nav-height) + 15vh);
-}
-
-.log {
-    color: blue;
-    transition: all 400ms;
 }

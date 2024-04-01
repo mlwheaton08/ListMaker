@@ -1,0 +1,19 @@
+.main {
+    --sidebar-width: 12%;
+
+    position: relative;
+    margin-top: var(--nav-height);
+    /* background-color: var(--clr-background-3); */
+}
+
+.sidebar {
+    /* border: 1px solid red; */
+    position: fixed;
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--nav-height));
+}
+
+.mainView {
+    /* border: 1px solid blue; */
+    margin-left: var(--sidebar-width);
+}
