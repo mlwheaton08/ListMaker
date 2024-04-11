@@ -8,12 +8,15 @@ import { Sidebar } from "./Sidebar"
 export function Dashboard2() {
 
     const sidebarItems = [
-        {text: "Lists", onClick: () => setView(<DashboardLists />)},
-        {text: "Recipes", onClick: () => setView(<DashboardRecipes />)},
-        {text: "Items", onClick: () => setView(<DashboardItems />)}
+        {text: "Lists", onClick: () => setView({text: "Lists", component: <DashboardLists />})},
+        {text: "Recipes", onClick: () => setView({text: "Recipes", component: <DashboardRecipes />})},
+        {text: "Items", onClick: () => setView({text: "Items", component: <DashboardItems />})}
     ]
 
-    const [view, setView] = useState(<DashboardRecipes />)
+    const [view, setView] = useState({
+        text: "Recipes",
+        component: <DashboardRecipes />
+    })
 
 
     return (
@@ -24,7 +27,7 @@ export function Dashboard2() {
                 view={view}
             />
 
-            {view}
+            {view.component}
 
         </div>
     )
