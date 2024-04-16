@@ -5,8 +5,11 @@ import { Nav } from './components/nav/Nav'
 import { Home } from './components/home/Home'
 import { Items } from './components/items/Items'
 import { Recipes } from './components/recipes/Recipes'
-import { Dashboard } from './components/dashboard/Dashboard'
-import { Dashboard2 } from './components/dashboard/Dashboard2'
+import { DashboardNav } from './components/dashboard/nav/DashboardNav'
+import { DashboardLists } from './components/dashboard/lists/DashboardLists'
+import { DashboardRecipes } from './components/dashboard/recipes/DashboardRecipes'
+import { DashboardItems } from './components/dashboard/items/DashboardItems'
+import { DashboardRecipeDetails } from './components/dashboard/recipes/DashbardRecipeDetails'
 
 export default function App() {
 
@@ -65,7 +68,20 @@ export default function App() {
 				<Route path="/" element={ <Home /> } />
 				<Route path="/recipes" element={ <Recipes /> } />
 				<Route path="/items" element={ <Items /> } />
-				<Route path="/dashboard" element={ <Dashboard2 /> } />
+
+				<Route path="/dashboard/" element={
+					<>
+						<DashboardNav />
+						<Outlet />
+					</>
+				}>
+
+					<Route path="/dashboard/lists" element={ <DashboardLists /> } />
+					<Route path="/dashboard/recipes" element={ <DashboardRecipes /> } />
+					<Route path="/dashboard/recipes/:id" element={ <DashboardRecipeDetails /> } />
+					<Route path="/dashboard/items" element={ <DashboardItems /> } />
+
+				</Route>
 
 			</Route>
 		</Routes>

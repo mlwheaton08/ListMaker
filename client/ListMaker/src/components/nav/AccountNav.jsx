@@ -6,7 +6,7 @@ export function AccountNav() {
 
     const navItems = [
         {text: "My List", navigateTo: "/list/(id for most recently updated open list)"},
-        {text: "Dashboard", navigateTo: "/dashboard"},
+        {text: "Dashboard", navigateTo: "/dashboard/recipes"},
         {text: "Settings", navigateTo: "/settings"},
         {text: "Sign Out", navigateTo: "/login"}
     ]

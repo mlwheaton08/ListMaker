@@ -20,6 +20,7 @@
 	--clr-accent: rgb(187, 75, 209);
 
 	--nav-height: 60px;
+	--dashNav-width: 210px;
 	--screen-minus-nav-height: calc(100vh - var(--nav-height));
 
 	color: var(--clr-foreground);

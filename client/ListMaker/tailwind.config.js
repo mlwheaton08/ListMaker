@@ -21,6 +21,9 @@ export default {
 				"nav-height": "var(--nav-height)",
 				"screen-minus-nav-height": "var(--screen-minus-nav-height)"
 			},
+			width: {
+				"dashNav-width": "var(--dashNav-width)"
+			},
 			margin: {
 				"nav-height": "var(--nav-height)",
 			},
