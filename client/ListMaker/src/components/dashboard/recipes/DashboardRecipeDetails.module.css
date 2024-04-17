@@ -1,0 +1,6 @@
+.main {
+    /* border: 1px solid blue; */
+    margin-top: var(--nav-height);
+    margin-left: var(--dashNav-width);
+    padding: 30px 80px;
+}

@@ -71,7 +71,7 @@ export default function App() {
 
 				<Route path="/dashboard/" element={
 					<>
-						<DashboardNav />
+						<DashboardNav navState={navState} />
 						<Outlet />
 					</>
 				}>

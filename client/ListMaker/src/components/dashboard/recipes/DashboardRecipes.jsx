@@ -1,43 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "./DashboardRecipes.module.css"
 import { useNavigate } from "react-router-dom"
+import { fetchRecipes } from "../../../APIMethods"
 
 export function DashboardRecipes() {
 
     const navigate = useNavigate()
 
-    const [recipes, setRecipes] = useState([
-        {
-            id: 0,
-            name: "Quick Trip",
-            notes: "Short list for a lazy Sunday shoppisdfasdfassdfsfsdfsdfdfasdfasdfasdfasdfng trip",
-            dateCreated: "4/15/24"
-        },
-        {
-            id: 1,
-            name: "Quick Trip",
-            notes: "Short list for a lazy Sunday shoppisdfasdfassdfsfsdfsdfdfasdfasdfasdfasdfng trip",
-            dateCreated: "4/15/24"
-        },
-        {
-            id: 2,
-            name: "Quick Trip",
-            notes: "Short list for a lazy Sunday shoppisdfasdfassdfsfsdfsdfdfasdfasdfasdfasdfng trip",
-            dateCreated: "4/15/24"
-        },
-        {
-            id: 3,
-            name: "Quick Trip",
-            notes: "Short list for a lazy Sunday shoppisdfasdfassdfsfsdfsdfdfasdfasdfasdfasdfng trip",
-            dateCreated: "4/15/24"
-        },
-        {
-            id: 4,
-            name: "Quick Trip",
-            notes: "Short list for a lazy Sunday shoppisdfasdfassdfsfsdfsdfdfasdfasdfasdfasdfng trip",
-            dateCreated: "4/15/24"
-        }
-    ])
+    const [recipes, setRecipes] = useState([])
+
+    const getRecipes = async () => {
+        const recipesArray = await fetchRecipes(1, false)
+        setRecipes(recipesArray)
+    }
+
+    useEffect(() => {
+        getRecipes()
+    }, [])
 
 
     return (
@@ -58,13 +37,13 @@ export function DashboardRecipes() {
                 </div>
             </div>
             
-            <table>
+            <table className={styles.table}>
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Notes</th>
-                        <th>Created</th>
-                        <th></th>
+                    <tr className={styles.tr}>
+                        <th className={styles.th}>Name</th>
+                        <th className={styles.th}>Notes</th>
+                        <th className={styles.th}>Created</th>
+                        <th className={styles.th}></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,12 +53,12 @@ export function DashboardRecipes() {
                                 <tr
                                     key={`dashboard-recipe-${recipe.id}`}
                                     onClick={() => navigate(`/dashboard/recipes/${recipe.id}`)}
-                                    className="rounded hover:cursor-pointer hover:bg-clr-background-3 transition-all duration-150"
+                                    className={`${styles.tr} rounded hover:cursor-pointer hover:bg-clr-background-3 transition-all duration-150`}
                                 >
-                                    <td>{recipe.name}</td>
-                                    <td>{recipe.notes}</td>
-                                    <td>{recipe.dateCreated}</td>
-                                    <td>||</td>
+                                    <td className={styles.td}>{recipe.name}</td>
+                                    <td className={styles.td}>{recipe.notes}</td>
+                                    <td className={styles.td}>{recipe.dateCreated}</td>
+                                    <td className={styles.td}>||</td>
                                 </tr>
                             )
                         })

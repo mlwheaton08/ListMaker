@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styles from "./DashboardNav.module.css"
 
-export function DashboardNav() {
+export function DashboardNav({ navState }) {
 
     const navItems = [
         {text: "Lists", navigateTo: "/dashboard/lists"},
@@ -12,7 +12,7 @@ export function DashboardNav() {
 
     return (
         <aside className={styles.main}>
-            <h2 className="mb-4 text-2xl">
+            <h2 className="mb-6 text-3xl">
                 Dashboard
             </h2>
             <nav className={styles.nav}>
@@ -22,7 +22,7 @@ export function DashboardNav() {
                             <Link
                                 key={`dashboard-nav-item-${index}`}
                                 to={item.navigateTo}
-                                className={`hover:cursor-pointer`}
+                                className={`hover:cursor-pointer ${navState.currentRoute.startsWith(`/dashboard/${item.text.toLowerCase()}`) ? "underline" : ""}`}
                             >
                                 {item.text}
                             </Link>

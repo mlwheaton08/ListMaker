@@ -1,5 +1,5 @@
 .main {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     position: fixed;
     /* margin-top: var(--nav-height); */
     width: var(--dashNav-width);
@@ -11,5 +11,5 @@
 .nav {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
 }
