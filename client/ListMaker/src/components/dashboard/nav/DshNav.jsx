@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import styles from "./DashboardNav.module.css"
+import styles from "./DshNav.module.css"
 
-export function DashboardNav({ navState }) {
+export function DshNav({ navState }) {
 
     const navItems = [
         {text: "Lists", navigateTo: "/dashboard/lists"},

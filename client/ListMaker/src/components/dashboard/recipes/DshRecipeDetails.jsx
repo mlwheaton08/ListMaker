@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
-import styles from "./DashboardRecipeDetails.module.css"
+import styles from "./DshRecipeDetails.module.css"
 import { fetchRecipe } from "../../../APIMethods"
 import { useEffect, useState } from "react"
 
-export function DashboardRecipeDetails() {
+export function DshRecipeDetails() {
 
     const {id} = useParams()
 
@@ -54,7 +54,7 @@ export function DashboardRecipeDetails() {
                                             <div>
                                                 <input
                                                     type="number"
-                                                    min={1}
+                                                    min={0}
                                                     max={50}
                                                     value={recipeItems[index].quantity}
                                                     onChange={(e) => {

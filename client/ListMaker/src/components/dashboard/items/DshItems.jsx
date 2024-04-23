@@ -1,4 +1,4 @@
-export function DashboardItems() {
+export function DshItems() {
 
     return <>
         <section className="container main items">

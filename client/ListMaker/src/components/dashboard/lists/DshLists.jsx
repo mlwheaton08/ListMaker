@@ -1,4 +1,4 @@
-export function DashboardLists() {
+export function DshLists() {
 
     return <>
         <section className="container main lists">
