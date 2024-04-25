@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import "./Nav.css"
+import styles from "./Nav.module.css"
 import { useState } from "react"
 import { SearchBar } from "./SearchBar.jsx"
 import { AccountNav } from "./AccountNav.jsx"
@@ -26,13 +26,11 @@ export function Nav({ navState, setNavState }) {
 		setNavState(copy)
 	})
 
+
     return (
-        <div
-            id="nav-bar"
-            className={`${navState.scrollY > 0 ? "bg-clr-background-2" : ""} transition-all duration-500`}
-        >
+        <div className={`${styles.main} ${navState.scrollY > 0 ? "bg-clr-background-2" : ""} transition-all duration-500`}>
             {/* Left side */}
-            <div id="nav-logo-title" className="navSection">
+            <div className={styles.section}>
 
                 {/* Logo and title */}
                 <div
@@ -44,7 +42,9 @@ export function Nav({ navState, setNavState }) {
                         alt="List Maker logo"
                         className="h-1/2"
                     />
-                    <h1 id="nav-logo-text" className="truncate w-fit min-w-fit font-semibold">List Maker</h1>
+                    <h1 className={styles.logoText}>
+                        List Maker
+                    </h1>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@ export function Nav({ navState, setNavState }) {
             <SearchBar />
 
             {/* Right side */}
-            <div className="navSection navMain desktop">
+            <div className={`${styles.section} ${styles.browseDesktop}`}>
                 {/* Nav items */}
                 <nav className="flex flex-nowrap items-center gap-8">
                     {

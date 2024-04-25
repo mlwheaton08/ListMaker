@@ -1,11 +1,12 @@
 import { useState } from "react"
+import styles from "./Nav.module.css"
 
 export function SearchBar() {
 
     const [isActive, setIsActive] = useState(false)
 
     document.addEventListener("click", (event) => {
-        const searchInputElement = document.getElementById("search-input")
+        const searchInputElement = document.getElementById("nav-search-input")
         if (document.activeElement === searchInputElement) {
             setIsActive(true)
         } else {
@@ -15,14 +16,14 @@ export function SearchBar() {
 
 
     return (
-        <div id="nav-search-bar" className="navSection">
+        <div className={styles.section}>
             {/* Icon */}
             <div>
                 {
                     isActive
                         ? ""
                         : <label
-                            htmlFor="search-input"
+                            htmlFor="nav-search-input"
                             className="relative"
                         >
                             <svg
@@ -37,10 +38,11 @@ export function SearchBar() {
 
                 {/* Input */}
                 <input
-                    id="search-input"
+                    id="nav-search-input"
                     name="search-input"
                     autoComplete="off"
                     placeholder={`${isActive ? "Search..." : ""}`}
+                    className={styles.searchInput}
                 />
             </div>
         </div>

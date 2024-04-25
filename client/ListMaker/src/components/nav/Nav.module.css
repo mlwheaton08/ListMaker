@@ -1,6 +1,5 @@
-#nav-bar {
+.main {
     width: 100vw;
-    /* max-width: 100%; */
     height: var(--nav-height);
     position: fixed;
     z-index: 10;
@@ -11,27 +10,35 @@
     padding: 0 13%;
 }
 
-.navMain {
-    margin-left: auto;
-}
-
-.navSection {
+.section {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
     gap: 4em;
 }
 
-#search-input {
+.logoText {
+    min-width: fit-content;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.searchInput {
     width: 9vw;
-    padding: 2px 8px 2px 40px;
-    border-radius: 6px;
+    padding-left: 40px;
     transition: all 300ms;
 }
 
-#search-input:focus {
+.searchInput:focus {
     width: calc(9vw + 32px);
-    padding: 2px 8px;
+    padding-left: 8px;
+}
+
+.browseDesktop,
+.browseMobile {
+    margin-left: auto;
 }
 
 .dropdownIcon {
@@ -54,15 +61,15 @@
     fill: var(--clr-foreground);
 }
 
-.dropdownIcon.account.active {
-    border-color: var(--clr-accent);
-}
-
 .dropdownIcon.mobile.active {
     fill: var(--clr-primary);
 }
 
-.navDropdown {
+.dropdownIcon.account.active {
+    border-color: var(--clr-accent);
+}
+
+.dropdownMenu {
     opacity: 1;
     visibility: visible;
     position: absolute;
@@ -80,49 +87,49 @@
     transition: all 200ms ease;
 }
 
-.navDropdown.hide {
+.dropdownMenu.hide {
     opacity: 0;
     visibility: hidden;
     transform: translate(-50%, -20px);
     transition: all 200ms ease;
 }
 
-.navDropdown.account a:last-child:hover {
+.dropdownMenu.account a:last-child:hover {
     color: red;
 }
 
 /* Desktop Only */
 @media screen and (min-width: 970px) {
-    .navMain.mobile {
+    .browseMobile {
         display: none;
     }
 }
 
 /* Small Desktop and Smaller */
 @media screen and (max-width: 1300px) {
-    #search-input {
+    .searchInput {
         width: 11vw;
     }
-    #search-input:focus {
+    .searchInput:focus {
         width: calc(11vw + 32px);
     }
 }
 
 /* Tablet and Smaller */
 @media screen and (max-width: 970px) {
-    #nav-bar {
+    .main {
         padding: 0 9%;
     }
-    #search-input {
+    .searchInput {
         width: 32vw;
     }
-    #search-input:focus {
+    .searchInput:focus {
         width: calc(32vw + 32px);
     }
-    .navMain.desktop {
+    .browseDesktop {
         display: none;
     }
-    .navDropdown {
+    .dropdownMenu {
         position: fixed;
         top: var(--nav-height);
         left: 0;
@@ -130,18 +137,18 @@
         width: 100vw;
         border-radius: 0;
     }
-    .navDropdown.hide {
+    .dropdownMenu.hide {
         transform: translateX(20px);
     }
 }
 
 /* Mobile */
 @media screen and (max-width: 600px) {
-    #nav-bar {
+    .main {
         gap: 20px;
         padding: 0 5%;
     }
-    #nav-logo-text {
+    .logoText {
         display: none;
     }
 }
@@ -150,7 +157,7 @@
 /* This doesn't keep navbar at full width of screen for some reason. not a priority though */
 /* Skinny Mobile */
 /* @media screen and (max-width: 300px) {
-    #nav-bar {
+    .main {
         min-width: 100vw;
     }
 } */

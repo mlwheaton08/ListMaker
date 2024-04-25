@@ -5,7 +5,11 @@ import { Nav } from './components/nav/Nav'
 import { Home } from './components/home/Home'
 import { Items } from './components/items/Items'
 import { Recipes } from './components/recipes/Recipes'
-import { Dashboard } from './components/dashboard/Dashboard'
+import { DshNav } from './components/dashboard/nav/DshNav'
+import { DshLists } from './components/dashboard/lists/DshLists'
+import { DshRecipes } from './components/dashboard/recipes/DshRecipes'
+import { DshItems } from './components/dashboard/items/DshItems'
+import { DshRecipeDetails } from './components/dashboard/recipes/DshRecipeDetails'
 
 export default function App() {
 
@@ -64,7 +68,20 @@ export default function App() {
 				<Route path="/" element={ <Home /> } />
 				<Route path="/recipes" element={ <Recipes /> } />
 				<Route path="/items" element={ <Items /> } />
-				<Route path="/dashboard" element={ <Dashboard /> } />
+
+				<Route path="/dashboard/" element={
+					<>
+						<DshNav navState={navState} />
+						<Outlet />
+					</>
+				}>
+
+					<Route path="/dashboard/lists" element={ <DshLists /> } />
+					<Route path="/dashboard/recipes" element={ <DshRecipes /> } />
+					<Route path="/dashboard/recipes/:id" element={ <DshRecipeDetails /> } />
+					<Route path="/dashboard/items" element={ <DshItems /> } />
+
+				</Route>
 
 			</Route>
 		</Routes>
