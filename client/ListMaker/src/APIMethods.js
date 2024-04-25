@@ -9,3 +9,9 @@ export const fetchRecipe = async (id) => {
     const recipeObj = await response.json()
     return recipeObj
 }
+
+export const fetchStoreSections = async () => {
+    const response = await fetch("https://localhost:7286/StoreSections")
+    const storeSectionsArray = await response.json()
+    return storeSectionsArray
+}

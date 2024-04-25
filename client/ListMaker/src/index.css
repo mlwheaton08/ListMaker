@@ -43,9 +43,13 @@ button {
 	transition: all 200ms ease;
 }
 
-button:hover {
+button:hover:enabled {
 	background-color: var(--clr-secondary);
 	color: var(--clr-background-2);
+}
+
+button:disabled {
+	opacity: 0.5;
 }
 
 svg {
